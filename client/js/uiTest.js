@@ -40,17 +40,17 @@ uiTest.create = function() {
     var dx = uiTest.panelBtn.x;
     var dy = uiTest.panelBtn.y;
 
+    var sprSuffix = "$$0026.png"
 
-
-    uiTest.fSpike = game.add.image(dx, dy, "dCreate", "n9_farSpike0026.png");
-    uiTest.fLeg = game.add.image(dx, dy, "dCreate", "n8_farLeg0026.png");
-    uiTest.fFoot = game.add.image(dx, dy, "dCreate", "n7_farFoot0026.png");
-    uiTest.fAxel = game.add.image(dx, dy, "dCreate", "n6_farAxel0026.png");
-    uiTest.cSpike = game.add.image(dx, dy, "dCreate", "n5_closeSpike0026.png");
-    uiTest.cLeg = game.add.image(dx, dy, "dCreate", "n4_closeLeg0026.png");
-    uiTest.cFoot = game.add.image(dx, dy, "dCreate", "n3_closeFoot0026.png");
-    uiTest.cAxel = game.add.image(dx, dy, "dCreate", "n2_closeAxel0026.png");
-    uiTest.eye = game.add.image(dx, dy, "dCreate", "n1_closeEye0026.png");
+    uiTest.fSpike = game.add.image(dx, dy, "dCreate", "n9_farSpike" + sprSuffix);
+    uiTest.fLeg = game.add.image(dx, dy, "dCreate", "n8_farLeg"+ sprSuffix);
+    uiTest.fFoot = game.add.image(dx, dy, "dCreate", "n7_farFoot"+ sprSuffix);
+    uiTest.fAxel = game.add.image(dx, dy, "dCreate", "n6_farAxel"+ sprSuffix);
+    uiTest.cSpike = game.add.image(dx, dy, "dCreate", "n5_closeSpike"+ sprSuffix);
+    uiTest.cLeg = game.add.image(dx, dy, "dCreate", "n4_closeLeg"+ sprSuffix);
+    uiTest.cFoot = game.add.image(dx, dy, "dCreate", "n3_closeFoot"+ sprSuffix);
+    uiTest.cAxel = game.add.image(dx, dy, "dCreate", "n2_closeAxel"+ sprSuffix);
+    uiTest.eye = game.add.image(dx, dy, "dCreate", "n1_closeEyek"+ sprSuffix);  //TODO: fix spelling error in sprite sheet asset
 
     //customize shit
     uiTest.cSpike.tint = 0xff0000;
