@@ -40,7 +40,7 @@ uiTest.create = function() {
     var dx = uiTest.panelBtn.x;
     var dy = uiTest.panelBtn.y;
 
-    var sprSuffix = "$$0026.png"
+    var sprSuffix = "$$0019.png";
 
     uiTest.fSpike = game.add.image(dx, dy, "dCreate", "n9_farSpike" + sprSuffix);
     uiTest.fLeg = game.add.image(dx, dy, "dCreate", "n8_farLeg"+ sprSuffix);
@@ -53,8 +53,10 @@ uiTest.create = function() {
     uiTest.eye = game.add.image(dx, dy, "dCreate", "n1_closeEyek"+ sprSuffix);  //TODO: fix spelling error in sprite sheet asset
 
     //customize shit
-    uiTest.cSpike.tint = 0xff0000;
-    uiTest.cFoot.tint = 0xff0000;
+    uiTest.eye.tint = 0x0060ff;
+    uiTest.cFoot.tint = 0x678bc6;
+    uiTest.fFoot.tint = 0x678bc6;
+    uiTest.fAxel.tint = 0x0140a8;
 };
 
 uiTest.update = function() {};
