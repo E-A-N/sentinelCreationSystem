@@ -22,19 +22,19 @@ uiTest.colors = {
 uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
     var current = 0;
 
-    leftSelect.onclick = function(){
+    leftSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
         var canMoveLeft = current > 0;
         current = canMoveLeft ? current - 1 : ray.length - 1;
         ray[current].visible = true;
-    };
+    });
 
-    rightSelect.onclick = function(){
+    rightSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
         var canMoveRight = current < ray.length - 1;
         current = canMoveRight ? current + 1 : 0;
         ray[current].visible = true;
-    };
+    });
 };
 
 uiTest.create = function() {
@@ -45,7 +45,7 @@ uiTest.create = function() {
         }
         else {
             //player.tint = 0;
-        }ray[currentray[current].visible = false;ray[current].visible = false;].visible = false;
+        }
     };
     var onOver = function(spr){
         spr.tint = 0xFFFFFF;
@@ -71,12 +71,15 @@ uiTest.create = function() {
     var x = uiTest.panelBtn.x;
     var y = uiTest.panelBtn.y;
 
-    uiTest.renderDroid(x, y, "$$0020.png");
+    uiTest.droidParts = uiTest.renderDroid(x, y, "$$0020.png");
 
 };
 
-uiTest.renderDroid = function(x, y, suffix){
+uiTest.renderDroid = function(x, y, suffix, isVisible = true){
 
+    var parts = [];
+
+    //render parts as visible but none collidable objects
     uiTest.fSpike = game.add.image(x, y, "dCreate", "n9_farSpike" + suffix);
     uiTest.fLeg = game.add.image(x, y, "dCreate", "n8_farLeg"+ suffix);
     uiTest.fFoot = game.add.image(x, y, "dCreate", "n7_farFoot"+ suffix);
@@ -87,12 +90,27 @@ uiTest.renderDroid = function(x, y, suffix){
     uiTest.cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
     uiTest.eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
 
-    //customize shit
-    uiTest.eye.tint = 0x0060ff;
-    uiTest.cFoot.tint = 0x678bc6;
-    uiTest.fFoot.tint = 0x678bc6;
-    uiTest.fAxel.tint = 0x0140a8;
+    uiTest.fSpike.visible = isVisible;
+    uiTest.fLeg.visible = isVisible;
+    uiTest.fFoot.visible = isVisible;
+    uiTest.fAxel.visible = isVisible;
+    uiTest.cSpike.visible = isVisible;
+    uiTest.cLeg.visible = isVisible;
+    uiTest.cFoot.visible = isVisible;
+    uiTest.cAxel.visible = isVisible;
+    uiTest.eye.visible = isVisible;
 
+    parts.push(uiTest.fSpike);
+    parts.push(uiTest.fLeg);
+    parts.push(uiTest.fFoot);
+    parts.push(uiTest.fAxel);
+    parts.push(uiTest.cSpike);
+    parts.push(uiTest.cLeg);
+    parts.push(uiTest.cFoot);
+    parts.push(uiTest.cAxel);
+    parts.push(uiTest.eye);
+
+    return parts;
 }
 
 uiTest.update = function() {};
