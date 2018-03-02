@@ -6,6 +6,25 @@ uiTest.preload = function(){
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
 };
 
+uiTest.colors = {
+    red:'#e50505',
+    blue: '#065ce5',
+    green: '#26b203',
+    yellow: '#eae71e',
+    orange: '#e88504',
+    purple: '#93008c',
+    grey: '#777477',
+    dark: '#282828'
+    light: '#f2f2f2',
+    babyBlue: '#1be8d7',
+};
+
+uiTest.partSelectionPanel = function(ray,){
+    var current = ray[0];
+
+
+};
+
 uiTest.create = function() {
 
     var clickEv = function(spr){
@@ -37,26 +56,31 @@ uiTest.create = function() {
     uiTest.panelBtn.events.onInputDown.add(function(){
         console.log("Dragging Panel!!!");
     });
-    var dx = uiTest.panelBtn.x;
-    var dy = uiTest.panelBtn.y;
+    var x = uiTest.panelBtn.x;
+    var y = uiTest.panelBtn.y;
 
-    var sprSuffix = "$$0019.png";
+    uiTest.renderDroid(x, y, "$$0020.png");
 
-    uiTest.fSpike = game.add.image(dx, dy, "dCreate", "n9_farSpike" + sprSuffix);
-    uiTest.fLeg = game.add.image(dx, dy, "dCreate", "n8_farLeg"+ sprSuffix);
-    uiTest.fFoot = game.add.image(dx, dy, "dCreate", "n7_farFoot"+ sprSuffix);
-    uiTest.fAxel = game.add.image(dx, dy, "dCreate", "n6_farAxel"+ sprSuffix);
-    uiTest.cSpike = game.add.image(dx, dy, "dCreate", "n5_closeSpike"+ sprSuffix);
-    uiTest.cLeg = game.add.image(dx, dy, "dCreate", "n4_closeLeg"+ sprSuffix);
-    uiTest.cFoot = game.add.image(dx, dy, "dCreate", "n3_closeFoot"+ sprSuffix);
-    uiTest.cAxel = game.add.image(dx, dy, "dCreate", "n2_closeAxel"+ sprSuffix);
-    uiTest.eye = game.add.image(dx, dy, "dCreate", "n1_closeEyek"+ sprSuffix);  //TODO: fix spelling error in sprite sheet asset
+};
+
+uiTest.renderDroid = function(x, y, suffix){
+
+    uiTest.fSpike = game.add.image(x, y, "dCreate", "n9_farSpike" + suffix);
+    uiTest.fLeg = game.add.image(x, y, "dCreate", "n8_farLeg"+ suffix);
+    uiTest.fFoot = game.add.image(x, y, "dCreate", "n7_farFoot"+ suffix);
+    uiTest.fAxel = game.add.image(x, y, "dCreate", "n6_farAxel"+ suffix);
+    uiTest.cSpike = game.add.image(x, y, "dCreate", "n5_closeSpike"+ suffix);
+    uiTest.cLeg = game.add.image(x, y, "dCreate", "n4_closeLeg"+ suffix);
+    uiTest.cFoot = game.add.image(x, y, "dCreate", "n3_closeFoot"+ suffix);
+    uiTest.cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
+    uiTest.eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
 
     //customize shit
     uiTest.eye.tint = 0x0060ff;
     uiTest.cFoot.tint = 0x678bc6;
     uiTest.fFoot.tint = 0x678bc6;
     uiTest.fAxel.tint = 0x0140a8;
-};
+
+}
 
 uiTest.update = function() {};
