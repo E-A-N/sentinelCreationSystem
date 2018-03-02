@@ -39,21 +39,6 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
 
 uiTest.create = function() {
 
-    var clickEv = function(spr){
-        if (spr.name === "left"){
-            //player.tint = 0xFFFFFF;
-        }
-        else {
-            //player.tint = 0;
-        }
-    };
-    var onOver = function(spr){
-        spr.tint = 0xFFFFFF;
-    };
-    var onOut = function(spr){
-        spr.tint = 0;
-    };
-
     uiTest.upBtn = game.add.sprite(100, 100, "ui", "grey_arrowUpWhite.png");
     uiTest.downBtn = game.add.sprite(100, 300,"ui", "grey_arrowDownWhite.png");
     uiTest.panelBtn = game.add.sprite(50, 150, "ui","green_panel.png");
@@ -71,7 +56,8 @@ uiTest.create = function() {
     var x = uiTest.panelBtn.x;
     var y = uiTest.panelBtn.y;
 
-    uiTest.droidParts = uiTest.renderDroid(x, y, "$$0020.png");
+    var parts = uiTest.renderDroid(x, y, "$$0020.png");
+    uiTest.partSelectionPanel(parts, uiTest.upBtn, uiTest.downBtn);
 
 };
 
