@@ -14,15 +14,27 @@ uiTest.colors = {
     orange: '#e88504',
     purple: '#93008c',
     grey: '#777477',
-    dark: '#282828'
+    dark: '#282828',
     light: '#f2f2f2',
     babyBlue: '#1be8d7',
 };
 
-uiTest.partSelectionPanel = function(ray,){
-    var current = ray[0];
+uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
+    var current = 0;
 
+    leftSelect.onclick = function(){
+        ray[current].visible = false;
+        var canMoveLeft = current > 0;
+        current = canMoveLeft ? current - 1 : ray.length - 1;
+        ray[current].visible = true;
+    };
 
+    rightSelect.onclick = function(){
+        ray[current].visible = false;
+        var canMoveRight = current < ray.length - 1;
+        current = canMoveRight ? current + 1 : 0;
+        ray[current].visible = true;
+    };
 };
 
 uiTest.create = function() {
@@ -33,7 +45,7 @@ uiTest.create = function() {
         }
         else {
             //player.tint = 0;
-        }
+        }ray[currentray[current].visible = false;ray[current].visible = false;].visible = false;
     };
     var onOver = function(spr){
         spr.tint = 0xFFFFFF;
