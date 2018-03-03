@@ -19,9 +19,11 @@ uiTest.colors = {
     babyBlue: '#1be8d7',
 };
 
+uiTest.colorSelectionPanel = function(colors, leftSelect, rightSelect){};
+
 uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
     var current = 0;
-
+    ray[0].visible = true;
     leftSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
         var canMoveLeft = current > 0;
@@ -56,7 +58,8 @@ uiTest.create = function() {
     var x = uiTest.panelBtn.x;
     var y = uiTest.panelBtn.y;
 
-    var parts = uiTest.renderDroid(x, y, "$$0020.png");
+    var parts = uiTest.renderDroid(x, y, "$$0020.png", false);
+    var colorIcons = uiTest.renderColorIcons(50, 150, uiTest.colors);
     uiTest.partSelectionPanel(parts, uiTest.upBtn, uiTest.downBtn);
 
 };
@@ -97,6 +100,19 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     parts.push(uiTest.eye);
 
     return parts;
+}
+
+uiTest.renderColorIcons = function(x,y,colors){
+    var names = Object.keys(colors);
+    var icons = [];
+    var suffix = "$$0020.png";
+
+    icons = names.map(function(c, index){
+        var iColor = game.add.image(index + x, y, "dCreate", "n2_closeAxel"+ suffix);
+        iColor.tint = color[c];
+    });
+
+    return icons
 }
 
 uiTest.update = function() {};
