@@ -7,16 +7,16 @@ uiTest.preload = function(){
 };
 
 uiTest.colors = {
-    red:'#e50505',
-    blue: '#065ce5',
-    green: '#26b203',
-    yellow: '#eae71e',
-    orange: '#e88504',
-    purple: '#93008c',
-    grey: '#777477',
-    dark: '#282828',
-    light: '#f2f2f2',
-    babyBlue: '#1be8d7',
+    red: 0xe50505,
+    blue: 0x065ce5,
+    green: 0x26b203,
+    yellow: 0xeae71e,
+    orange: 0xe88504,
+    purple: 0x93008c,
+    grey: 0x777477,
+    dark: 0x282828,
+    light: 0xf2f2f2,
+    babyBlue: 0x1be8d7,
 };
 
 uiTest.colorSelectionPanel = function(colors, leftSelect, rightSelect){};
@@ -59,7 +59,7 @@ uiTest.create = function() {
     var y = uiTest.panelBtn.y;
 
     var parts = uiTest.renderDroid(x, y, "$$0020.png", false);
-    var colorIcons = uiTest.renderColorIcons(50, 150, uiTest.colors);
+    var colorIcons = uiTest.renderColorIcons(2, 50, uiTest.colors);
     uiTest.partSelectionPanel(parts, uiTest.upBtn, uiTest.downBtn);
 
 };
@@ -106,10 +106,13 @@ uiTest.renderColorIcons = function(x,y,colors){
     var names = Object.keys(colors);
     var icons = [];
     var suffix = "$$0020.png";
-
+    var offset = 50;
     icons = names.map(function(c, index){
-        var iColor = game.add.image(index + x, y, "dCreate", "n2_closeAxel"+ suffix);
-        iColor.tint = color[c];
+        var iColor = game.add.image(x + (offset * index), y, "dCreate", "n2_closeAxel"+ suffix);
+        iColor.x += iColor.width;
+        iColor.tint = colors[c];
+        console.log(c);
+        return iColor
     });
 
     return icons
