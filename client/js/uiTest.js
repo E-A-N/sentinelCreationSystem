@@ -2,6 +2,7 @@ var uiTest = {};
 uiTest.preload = function(){
     uiTest.btnKey = "btn1";
     uiTest._sColor = uiTest.colors["light"];
+    uiTest._sPart  = null;
     game.stage.backgroundColor = '#85b5e1';
     game.load.atlasJSONHash("ui", "assets/sprites/ui/spriteSheet.png", "assets/sprites/ui/references.json");
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
@@ -39,10 +40,8 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
         iColor._uiType = "colorBtn";
         //iColor.input.enableDrag(true);
         iColor.events.onInputDown.add(function(){
-            console.log(this.tint);
-            console.log("clicked!!");
+            uiTest._sPart.tint = uiTest._sColor;
         }, iColor);
-        console.log(c);
         return iColor
     });
 
@@ -75,7 +74,9 @@ uiTest.colorSelectionPanel = function(ray, leftSelect, rightSelect){
         uiTest.storePartColor(ray[current].tint);
     });
 };
-
+uiTest.storeSentinelPart = function(part){
+    uiTest._sPart = part;
+};
 uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
     var current = 0;
     ray[0].visible = true;
@@ -86,12 +87,14 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
         var canMoveLeft = current > 0;
         current = canMoveLeft ? current - 1 : ray.length - 1;
         ray[current].visible = true;
+        uiTest.storeSentinelPart(ray[current]);
     });
     rightSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
         var canMoveRight = current < ray.length - 1;
         current = canMoveRight ? current + 1 : 0;
         ray[current].visible = true;
+        uiTest.storeSentinelPart(ray[current]);
     });
 };
 
@@ -151,6 +154,9 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     uiTest.cFoot = game.add.image(x, y, "dCreate", "n3_closeFoot"+ suffix);
     uiTest.cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
     uiTest.eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
+
+    //Set Default UI Part to Color
+    uiTest._sPart = uiTest.fSpike;
 
     parts.push(uiTest.fSpike);
     parts.push(uiTest.fLeg);
