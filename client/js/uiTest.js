@@ -49,11 +49,14 @@ uiTest.colorSelectionPanel = function(colors, leftSelect, rightSelect){};
 uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
     var current = 0;
     ray[0].visible = true;
+    leftSelect.inputEnabled = true;
+    rightSelect.inputEnabled = true;
     leftSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
         var canMoveLeft = current > 0;
         current = canMoveLeft ? current - 1 : ray.length - 1;
         ray[current].visible = true;
+        console.log("An up Button has been clicked!");
     });
 
     rightSelect.events.onInputDown.add(function(){
@@ -61,6 +64,7 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
         var canMoveRight = current < ray.length - 1;
         current = canMoveRight ? current + 1 : 0;
         ray[current].visible = true;
+        console.log("A down Button has been clicked!");
     });
 };
 
@@ -71,8 +75,6 @@ uiTest.create = function() {
     uiTest.downBtn = game.add.sprite(100, 300,"ui", "grey_arrowDownWhite.png");
     uiTest.panelBtn = game.add.sprite(50, 150, "ui","green_panel.png");
 
-    uiTest.upBtn.inputEnabled = true;
-    uiTest.downBtn.inputEnabled = true;
     // uiTest.panelBtn.inputEnabled = true;
     // uiTest.panelBtn.input.enableDrag(true);
 
@@ -80,13 +82,12 @@ uiTest.create = function() {
     var cUpBtn = game.add.sprite(cPanelBtn.x + 50, cPanelBtn.y - 50, "ui", "grey_arrowUpWhite.png");
     var cDownBtn = game.add.sprite(cPanelBtn.x + 50, cPanelBtn.y + 150,"ui", "grey_arrowDownWhite.png");
 
-
     //"parts" UI coordinates
     var px = uiTest.panelBtn.x;
     var py = uiTest.panelBtn.y;
 
     //color UI coordinates
-    var cx = cPanelBtn.x;
+    var cx = cPanelBtn.x - 100;
     var cy = cPanelBtn.y;
 
     var parts = uiTest.renderDroid(px, py, "$$0020.png", false);
