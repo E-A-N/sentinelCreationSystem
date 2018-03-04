@@ -33,6 +33,9 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
         iColor.tint = colors[c];
         iColor.visible = isVisible;
         iColor.inputEnabled = true;
+
+        //Set UI Type so button can be interfaced with dynamically
+        iColor._uiType = "colorBtn";
         //iColor.input.enableDrag(true);
         iColor.events.onInputDown.add(function(){
             console.log(this.tint);
@@ -70,29 +73,43 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
 
 uiTest.create = function() {
 
+    //Sentinel Part(pt) UI
+    var ptUpBtn = game.add.sprite(100, 100, "ui", "grey_arrowUpWhite.png");
+    var ptDownBtn = game.add.sprite(100, 300,"ui", "grey_arrowDownWhite.png");
+    var ptPanelBtn = game.add.sprite(50, 150, "ui","green_panel.png");
 
-    uiTest.upBtn = game.add.sprite(100, 100, "ui", "grey_arrowUpWhite.png");
-    uiTest.downBtn = game.add.sprite(100, 300,"ui", "grey_arrowDownWhite.png");
-    uiTest.panelBtn = game.add.sprite(50, 150, "ui","green_panel.png");
+    //"parts" UI coordinates
+    var px =  ptPanelBtn.x;
+    var py =  ptPanelBtn.y;
+
+    var ptCaptionText = "Sentinel Part";
+    var ptCaptionFont = { font: "14px Arial Black", fill: "white" };
+    var ptCaption = game.add.text(px, py - 25, ptCaptionText, ptCaptionFont);
+    ptCaption.stroke = "black";
+    ptCaption.strokeThickness = 5;
 
     // uiTest.panelBtn.inputEnabled = true;
     // uiTest.panelBtn.input.enableDrag(true);
 
     var cPanelBtn = game.add.sprite(200, 150, "ui","green_panel.png");
+    cPanelBtn.alpha = 0.5;
     var cUpBtn = game.add.sprite(cPanelBtn.x + 50, cPanelBtn.y - 50, "ui", "grey_arrowUpWhite.png");
     var cDownBtn = game.add.sprite(cPanelBtn.x + 50, cPanelBtn.y + 150,"ui", "grey_arrowDownWhite.png");
 
-    //"parts" UI coordinates
-    var px = uiTest.panelBtn.x;
-    var py = uiTest.panelBtn.y;
-
     //color UI coordinates
-    var cx = cPanelBtn.x - 100;
+    var cx = cPanelBtn.x;
     var cy = cPanelBtn.y;
 
-    var parts = uiTest.renderDroid(px, py, "$$0020.png", false);
-    var colorIcons = uiTest.renderColorIcons(cx, cy, uiTest.colors);
-    uiTest.partSelectionPanel(parts, uiTest.upBtn, uiTest.downBtn);
+    var cCaptionText = "Choose Color";
+    var cCaptionFont = { font: "14px Arial Black", fill: "white" };
+    var cCaption = game.add.text(cx, cy - 25, cCaptionText, cCaptionFont);
+    cCaption.stroke = "black";
+    cCaption.strokeThickness = 5;
+
+
+    var parts = uiTest.renderDroid(px , py, "$$0020.png", false);
+    var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
+    uiTest.partSelectionPanel(parts, ptUpBtn, ptDownBtn);
     uiTest.partSelectionPanel(colorIcons, cUpBtn, cDownBtn);
 
 };
@@ -112,16 +129,6 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     uiTest.cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
     uiTest.eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
 
-    uiTest.fSpike.visible = isVisible;
-    uiTest.fLeg.visible = isVisible;
-    uiTest.fFoot.visible = isVisible;
-    uiTest.fAxel.visible = isVisible;
-    uiTest.cSpike.visible = isVisible;
-    uiTest.cLeg.visible = isVisible;
-    uiTest.cFoot.visible = isVisible;
-    uiTest.cAxel.visible = isVisible;
-    uiTest.eye.visible = isVisible;
-
     parts.push(uiTest.fSpike);
     parts.push(uiTest.fLeg);
     parts.push(uiTest.fFoot);
@@ -131,6 +138,12 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     parts.push(uiTest.cFoot);
     parts.push(uiTest.cAxel);
     parts.push(uiTest.eye);
+
+    parts = parts.map(function(p){
+        p.visible = isVisible;
+        p._uiType = "droidPart"; //allows button can be interfaced with dynamically
+        return p;
+    });
 
     return parts;
 }
