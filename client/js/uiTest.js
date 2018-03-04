@@ -19,6 +19,31 @@ uiTest.colors = {
     babyBlue: 0x1be8d7,
 };
 
+uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
+    var names = Object.keys(colors);
+    var icons = [];
+    var suffix = "$$0020.png";
+
+    var clickEv = function(spr){
+        conosle.log(spr.tint);
+    };
+    icons = names.map(function(c, index){
+        var iColor = game.add.sprite(x, y, "dCreate", "n2_closeAxel"+ suffix);
+        iColor.x += iColor.width;
+        iColor.tint = colors[c];
+        iColor.visible = isVisible;
+        iColor.inputEnabled = true;
+        //iColor.input.enableDrag(true);
+        iColor.events.onInputDown.add(function(){
+            console.log(this.tint);
+            console.log("clicked!!");
+        }, iColor);
+        console.log(c);
+        return iColor
+    });
+
+    return icons
+}
 uiTest.colorSelectionPanel = function(colors, leftSelect, rightSelect){};
 
 uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
@@ -41,26 +66,32 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
 
 uiTest.create = function() {
 
+
     uiTest.upBtn = game.add.sprite(100, 100, "ui", "grey_arrowUpWhite.png");
     uiTest.downBtn = game.add.sprite(100, 300,"ui", "grey_arrowDownWhite.png");
     uiTest.panelBtn = game.add.sprite(50, 150, "ui","green_panel.png");
 
     uiTest.upBtn.inputEnabled = true;
-    uiTest.upBtn.input.enableDrag(true);
     uiTest.downBtn.inputEnabled = true;
-    uiTest.downBtn.input.enableDrag(true);
-    uiTest.panelBtn.inputEnabled = true;
-    uiTest.panelBtn.input.enableDrag(true);
+    // uiTest.panelBtn.inputEnabled = true;
+    // uiTest.panelBtn.input.enableDrag(true);
 
-    uiTest.panelBtn.events.onInputDown.add(function(){
-        console.log("Dragging Panel!!!");
-    });
-    var x = uiTest.panelBtn.x;
-    var y = uiTest.panelBtn.y;
+    var cUpBtn = game.add.sprite(200, 100, "ui", "grey_arrowUpWhite.png");
+    var cDownBtn = game.add.sprite(200, 300,"ui", "grey_arrowDownWhite.png");
+    var cPanelBtn = game.add.sprite(200, 150, "ui","green_panel.png");
 
-    var parts = uiTest.renderDroid(x, y, "$$0020.png", false);
-    var colorIcons = uiTest.renderColorIcons(2, 50, uiTest.colors);
+    //"parts" UI coordinates
+    var px = uiTest.panelBtn.x;
+    var py = uiTest.panelBtn.y;
+
+    //color UI coordinates
+    var cx = cPanelBtn.x;
+    var cy = cPanelBtn.y;
+
+    var parts = uiTest.renderDroid(px, py, "$$0020.png", false);
+    var colorIcons = uiTest.renderColorIcons(cx, cy, uiTest.colors);
     uiTest.partSelectionPanel(parts, uiTest.upBtn, uiTest.downBtn);
+    uiTest.partSelectionPanel(colorIcons, cUpBtn, cDownBtn);
 
 };
 
@@ -100,22 +131,6 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     parts.push(uiTest.eye);
 
     return parts;
-}
-
-uiTest.renderColorIcons = function(x,y,colors){
-    var names = Object.keys(colors);
-    var icons = [];
-    var suffix = "$$0020.png";
-    var offset = 50;
-    icons = names.map(function(c, index){
-        var iColor = game.add.image(x + (offset * index), y, "dCreate", "n2_closeAxel"+ suffix);
-        iColor.x += iColor.width;
-        iColor.tint = colors[c];
-        console.log(c);
-        return iColor
-    });
-
-    return icons
 }
 
 uiTest.update = function() {};
