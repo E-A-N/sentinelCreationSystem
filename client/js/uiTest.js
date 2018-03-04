@@ -76,9 +76,10 @@ uiTest.create = function() {
     // uiTest.panelBtn.inputEnabled = true;
     // uiTest.panelBtn.input.enableDrag(true);
 
-    var cUpBtn = game.add.sprite(200, 100, "ui", "grey_arrowUpWhite.png");
-    var cDownBtn = game.add.sprite(200, 300,"ui", "grey_arrowDownWhite.png");
     var cPanelBtn = game.add.sprite(200, 150, "ui","green_panel.png");
+    var cUpBtn = game.add.sprite(cPanelBtn.x + 50, cPanelBtn.y - 50, "ui", "grey_arrowUpWhite.png");
+    var cDownBtn = game.add.sprite(cPanelBtn.x + 50, cPanelBtn.y + 150,"ui", "grey_arrowDownWhite.png");
+
 
     //"parts" UI coordinates
     var px = uiTest.panelBtn.x;
