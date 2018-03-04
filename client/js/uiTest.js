@@ -1,6 +1,7 @@
 var uiTest = {};
 uiTest.preload = function(){
     uiTest.btnKey = "btn1";
+    uiTest._sColor = uiTest.colors["light"];
     game.stage.backgroundColor = '#85b5e1';
     game.load.atlasJSONHash("ui", "assets/sprites/ui/spriteSheet.png", "assets/sprites/ui/references.json");
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
@@ -47,7 +48,33 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
 
     return icons
 }
-uiTest.colorSelectionPanel = function(colors, leftSelect, rightSelect){};
+uiTest.storePartColor = function(color){
+    uiTest._sColor = color;
+}
+uiTest.colorSelectionPanel = function(ray, leftSelect, rightSelect){
+    var current = 0;
+    ray[0].visible = true;
+    leftSelect.inputEnabled = true;
+    rightSelect.inputEnabled = true;
+    leftSelect.events.onInputDown.add(function(){
+        ray[current].visible = false;
+        var canMoveLeft = current > 0;
+        current = canMoveLeft ? current - 1 : ray.length - 1;
+        ray[current].visible = true;
+
+        //TODO: find a way to use the uiTest.colors object instead
+        uiTest.storePartColor(ray[current].tint);
+    });
+    rightSelect.events.onInputDown.add(function(){
+        ray[current].visible = false;
+        var canMoveRight = current < ray.length - 1;
+        current = canMoveRight ? current + 1 : 0;
+        ray[current].visible = true;
+
+        //TODO: find a way to use the uiTest.colors object instead
+        uiTest.storePartColor(ray[current].tint);
+    });
+};
 
 uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
     var current = 0;
@@ -59,15 +86,12 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
         var canMoveLeft = current > 0;
         current = canMoveLeft ? current - 1 : ray.length - 1;
         ray[current].visible = true;
-        console.log("An up Button has been clicked!");
     });
-
     rightSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
         var canMoveRight = current < ray.length - 1;
         current = canMoveRight ? current + 1 : 0;
         ray[current].visible = true;
-        console.log("A down Button has been clicked!");
     });
 };
 
@@ -100,17 +124,16 @@ uiTest.create = function() {
     var cx = cPanelBtn.x;
     var cy = cPanelBtn.y;
 
-    var cCaptionText = "Choose Color";
+    var cCaptionText = "Material Color";
     var cCaptionFont = { font: "14px Arial Black", fill: "white" };
     var cCaption = game.add.text(cx, cy - 25, cCaptionText, cCaptionFont);
     cCaption.stroke = "black";
     cCaption.strokeThickness = 5;
 
-
     var parts = uiTest.renderDroid(px , py, "$$0020.png", false);
     var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
     uiTest.partSelectionPanel(parts, ptUpBtn, ptDownBtn);
-    uiTest.partSelectionPanel(colorIcons, cUpBtn, cDownBtn);
+    uiTest.colorSelectionPanel(colorIcons, cUpBtn, cDownBtn);
 
 };
 
@@ -141,7 +164,7 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
 
     parts = parts.map(function(p){
         p.visible = isVisible;
-        p._uiType = "droidPart"; //allows button can be interfaced with dynamically
+        p._uiType = "droidPart"; //allows button to be interfaced with dynamically
         return p;
     });
 
