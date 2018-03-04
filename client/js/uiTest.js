@@ -20,7 +20,18 @@ uiTest.colors = {
     light: 0xf2f2f2,
     babyBlue: 0x1be8d7,
 };
+uiTest.customized = {
 
+}
+uiTest.updatePreview = function(ray){
+    var current = 0;
+    ray[0].visible = true;
+
+    ray.forEach(function(p){
+
+    });
+
+};
 uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
     var names = Object.keys(colors);
     var icons = [];
@@ -55,6 +66,7 @@ uiTest.colorSelectionPanel = function(ray, leftSelect, rightSelect){
     ray[0].visible = true;
     leftSelect.inputEnabled = true;
     rightSelect.inputEnabled = true;
+    //TODO: create event emitter that updates the preview panel when a button is clicked
     leftSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
         var canMoveLeft = current > 0;
@@ -103,6 +115,7 @@ uiTest.create = function() {
     var panelLoc = "green_panel.png";
     var upLoc = "grey_arrowUpWhite.png";
     var downLoc = "grey_arrowDownWhite.png";
+    var renderFrame = "$$0020.png";
 
     //Sentinel Part(pt) UI
     var ptPanelBtn = game.add.sprite(325, 150, "ui",panelLoc);
@@ -112,8 +125,6 @@ uiTest.create = function() {
 
     var ptUpBtn = game.add.sprite(px + 50, py - 50, "ui", upLoc);
     var ptDownBtn = game.add.sprite(px + 50, py + 150,"ui", downLoc);
-
-
 
     var ptCaptionText = "Sentinel Part";
     var ptCaptionFont = { font: "14px Arial Black", fill: "white" };
@@ -148,14 +159,14 @@ uiTest.create = function() {
     // var prUpBtn = game.add.sprite(prx + 50, pry - 50, "ui", upLoc);
     // var prDownBtn = game.add.sprite(prx + 50, pry + 150,"ui", downLoc);
 
-
     var prCaptionText = "~Preview~";
     var prCaptionFont = { font: "24px Arial Black", fill: "white" };
     var prCaption = game.add.text(prx - 20, pry - 35, prCaptionText, prCaptionFont);
     prCaption.stroke = "black";
     prCaption.strokeThickness = 8;
 
-    var parts = uiTest.renderDroid(px , py, "$$0020.png", false);
+    var parts = uiTest.renderDroid(px , py, renderFrame, false);
+    var previews = uiTest.renderDroid(prx, pry, renderFrame, true);
     var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
     uiTest.partSelectionPanel(parts, ptUpBtn, ptDownBtn);
     uiTest.colorSelectionPanel(colorIcons, cUpBtn, cDownBtn);
