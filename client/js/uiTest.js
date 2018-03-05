@@ -4,6 +4,10 @@ uiTest.preload = function(){
     uiTest._sColor = uiTest.colors["red"];
     uiTest._sPart  = null;
     uiTest._sType  = "default";
+    uiTest.preview = {
+        x: 75,
+        y: 150
+    };
     game.stage.backgroundColor = '#85b5e1';
     game.load.atlasJSONHash("ui", "assets/sprites/ui/spriteSheet.png", "assets/sprites/ui/references.json");
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
@@ -21,16 +25,13 @@ uiTest.colors = {
     light: 0xf2f2f2,
     babyBlue: 0x1be8d7,
 };
-uiTest.customized = {
-
-}
-uiTest.updatePreview = function(ray){
-    var current = 0;
-    ray[0].visible = true;
-
-    ray.forEach(function(p){
-
-    });
+uiTest.updatePreview = function(){
+    var model = uiTest.customModel;
+    for (var p in model){
+        model[p].src.tint = model[p].tint;
+        //console.log(p);
+        //model[p].src.type = p.type;
+    }
 
 };
 uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
@@ -38,9 +39,6 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
     var icons = [];
     var suffix = "$$0020.png";
 
-    var clickEv = function(spr){
-        conosle.log(spr.tint);
-    };
     icons = names.map(function(c, index){
         var iColor = game.add.sprite(x, y, "dCreate", "n2_closeAxel"+ suffix);
         iColor.x += iColor.width;
@@ -52,7 +50,10 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
         iColor._uiType = "colorBtn";
         //iColor.input.enableDrag(true);
         iColor.events.onInputDown.add(function(){
-            uiTest._sPart.tint = uiTest._sColor;
+            //uiTest._sPart.tint = uiTest._sColor;
+            var name = uiTest._sPart._name;
+            uiTest.customModel[name].tint = iColor.tint //
+            uiTest.updatePreview();
         }, iColor);
         return iColor
     });
@@ -76,6 +77,7 @@ uiTest.colorSelectionPanel = function(ray, leftSelect, rightSelect){
 
         //TODO: find a way to use the uiTest.colors object instead
         uiTest.storePartColor(ray[current].tint);
+        uiTest.updatePreview();
     });
     rightSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
@@ -85,6 +87,7 @@ uiTest.colorSelectionPanel = function(ray, leftSelect, rightSelect){
 
         //TODO: find a way to use the uiTest.colors object instead
         uiTest.storePartColor(ray[current].tint);
+        //uiTest.updatePreview();
     });
 };
 uiTest.storeSentinelPart = function(part){
@@ -101,6 +104,7 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
         current = canMoveLeft ? current - 1 : ray.length - 1;
         ray[current].visible = true;
         uiTest.storeSentinelPart(ray[current]);
+        uiTest.updatePreview();
     });
     rightSelect.events.onInputDown.add(function(){
         ray[current].visible = false;
@@ -108,11 +112,13 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
         current = canMoveRight ? current + 1 : 0;
         ray[current].visible = true;
         uiTest.storeSentinelPart(ray[current]);
+        uiTest.updatePreview();
     });
 };
 uiTest.customModel = {
-    "example":{
+    "eye":{
         type: "default",
+        src: {},
         tint: 0xFFFFFF
     }
 }
@@ -158,7 +164,7 @@ uiTest.create = function() {
     cCaption.strokeThickness = 5;
 
     //Sentinel Preview(pr) UI
-    var prPanelBtn = game.add.sprite(75, 150, "ui",panelLoc);
+    var prPanelBtn = game.add.sprite(uiTest.preview.x, uiTest.preview.y, "ui",panelLoc);
     //"parts" UI coordinates
     var prx =  prPanelBtn.x;
     var pry =  prPanelBtn.y;
@@ -174,6 +180,13 @@ uiTest.create = function() {
 
     var parts = uiTest.renderDroid(px , py, renderSuffix, false);
     var previews = uiTest.renderDroid(prx, pry, renderSuffix, true);
+    previews.forEach(function(p){
+        uiTest.customModel[p._name] = {
+            src: p,
+            tint: p.tint
+            //type: p_type,
+        }
+    });
     var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
     uiTest.partSelectionPanel(parts, ptUpBtn, ptDownBtn);
     uiTest.colorSelectionPanel(colorIcons, cUpBtn, cDownBtn);
@@ -196,15 +209,15 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     var cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
     var eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
 
-    fSpike._sName = "fSpike";
-    fLeg._sName = "fLeg";
-    fFoot._sName = "fFoot";
-    fAxel._sName = "fAxel";
-    cSpike._sName = "cSpike";
-    cLeg._sName = "cLeg";
-    cFoot._sName = "cFoot";
-    cAxel._sName = "cAxel";
-    eye._sName = "eye";
+    fSpike._name = "fSpike";
+    fLeg._name = "fLeg";
+    fFoot._name = "fFoot";
+    fAxel._name = "fAxel";
+    cSpike._name = "cSpike";
+    cLeg._name = "cLeg";
+    cFoot._name = "cFoot";
+    cAxel._name = "cAxel";
+    eye._name = "eye";
 
     //Set Default UI Part to Color
     uiTest._sPart = fSpike;
