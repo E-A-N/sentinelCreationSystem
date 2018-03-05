@@ -1,5 +1,4 @@
 # Sentinel Creation System (N-Droid)
 A Phaser/Node App  that allows the creation of custom N-Droids!
 
-![alt text][preview]
-[preview]: https://github.com/E-A-N/sentinelCreationSystem/blob/master/assetDump/customDroidExample.png "Sentinel Creation Preview"
+![Image not found?] (https://github.com/E-A-N/sentinelCreationSystem/blob/master/assetDump/customDroidExample.png "Sentinel Creation Preview")
