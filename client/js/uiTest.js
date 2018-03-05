@@ -1,8 +1,9 @@
 var uiTest = {};
 uiTest.preload = function(){
     uiTest.btnKey = "btn1";
-    uiTest._sColor = uiTest.colors["light"];
+    uiTest._sColor = uiTest.colors["red"];
     uiTest._sPart  = null;
+    uiTest._sType  = "default";
     game.stage.backgroundColor = '#85b5e1';
     game.load.atlasJSONHash("ui", "assets/sprites/ui/spriteSheet.png", "assets/sprites/ui/references.json");
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
@@ -109,13 +110,19 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
         uiTest.storeSentinelPart(ray[current]);
     });
 };
-
+uiTest.customModel = {
+    "example":{
+        type: "default",
+        tint: 0xFFFFFF
+    }
+}
 uiTest.create = function() {
 
     var panelLoc = "green_panel.png";
     var upLoc = "grey_arrowUpWhite.png";
     var downLoc = "grey_arrowDownWhite.png";
-    var renderFrame = "$$0020.png";
+    var renderSuffix = "$$0020.png";  //NOTE future suffix ex: $Default$0020.png
+    //TODO: think about WHEN the part type should be appended to source string
 
     //Sentinel Part(pt) UI
     var ptPanelBtn = game.add.sprite(325, 150, "ui",panelLoc);
@@ -165,8 +172,8 @@ uiTest.create = function() {
     prCaption.stroke = "black";
     prCaption.strokeThickness = 8;
 
-    var parts = uiTest.renderDroid(px , py, renderFrame, false);
-    var previews = uiTest.renderDroid(prx, pry, renderFrame, true);
+    var parts = uiTest.renderDroid(px , py, renderSuffix, false);
+    var previews = uiTest.renderDroid(prx, pry, renderSuffix, true);
     var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
     uiTest.partSelectionPanel(parts, ptUpBtn, ptDownBtn);
     uiTest.colorSelectionPanel(colorIcons, cUpBtn, cDownBtn);
@@ -178,28 +185,39 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     var parts = [];
 
     //render parts as visible but none collidable objects
-    uiTest.fSpike = game.add.image(x, y, "dCreate", "n9_farSpike" + suffix);
-    uiTest.fLeg = game.add.image(x, y, "dCreate", "n8_farLeg"+ suffix);
-    uiTest.fFoot = game.add.image(x, y, "dCreate", "n7_farFoot"+ suffix);
-    uiTest.fAxel = game.add.image(x, y, "dCreate", "n6_farAxel"+ suffix);
-    uiTest.cSpike = game.add.image(x, y, "dCreate", "n5_closeSpike"+ suffix);
-    uiTest.cLeg = game.add.image(x, y, "dCreate", "n4_closeLeg"+ suffix);
-    uiTest.cFoot = game.add.image(x, y, "dCreate", "n3_closeFoot"+ suffix);
-    uiTest.cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
-    uiTest.eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
+    //TODO: add core uiTest.fCore = game.add.image(x, y, "dCreate", "n9_farCore" + suffix);
+    var fSpike = game.add.image(x, y, "dCreate", "n9_farSpike" + suffix);
+    var fLeg = game.add.image(x, y, "dCreate", "n8_farLeg"+ suffix);
+    var fFoot = game.add.image(x, y, "dCreate", "n7_farFoot"+ suffix);
+    var fAxel = game.add.image(x, y, "dCreate", "n6_farAxel"+ suffix);
+    var cSpike = game.add.image(x, y, "dCreate", "n5_closeSpike"+ suffix);
+    var cLeg = game.add.image(x, y, "dCreate", "n4_closeLeg"+ suffix);
+    var cFoot = game.add.image(x, y, "dCreate", "n3_closeFoot"+ suffix);
+    var cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
+    var eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
+
+    fSpike._sName = "fSpike";
+    fLeg._sName = "fLeg";
+    fFoot._sName = "fFoot";
+    fAxel._sName = "fAxel";
+    cSpike._sName = "cSpike";
+    cLeg._sName = "cLeg";
+    cFoot._sName = "cFoot";
+    cAxel._sName = "cAxel";
+    eye._sName = "eye";
 
     //Set Default UI Part to Color
-    uiTest._sPart = uiTest.fSpike;
+    uiTest._sPart = fSpike;
 
-    parts.push(uiTest.fSpike);
-    parts.push(uiTest.fLeg);
-    parts.push(uiTest.fFoot);
-    parts.push(uiTest.fAxel);
-    parts.push(uiTest.cSpike);
-    parts.push(uiTest.cLeg);
-    parts.push(uiTest.cFoot);
-    parts.push(uiTest.cAxel);
-    parts.push(uiTest.eye);
+    parts.push(fSpike);
+    parts.push(fLeg);
+    parts.push(fFoot);
+    parts.push(fAxel);
+    parts.push(cSpike);
+    parts.push(cLeg);
+    parts.push(cFoot);
+    parts.push(cAxel);
+    parts.push(eye);
 
     parts = parts.map(function(p){
         p.visible = isVisible;
