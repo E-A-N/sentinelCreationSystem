@@ -1,5 +1,14 @@
 const creationGuiConfig = {
+    default:{}
     colorPanel:{}
+    partsPanel:{}
+};
+
+creationGuiConfig.default.graphicSources = {
+    renderSuffix: "$$0020.png",
+    panelGraphic: "green_panel.png",
+    upButtonIcon: "grey_arrowUpWhite.png",
+    downButtonIcon: "grey_arrowDownWhite.png"
 };
 
 creationGuiConfig.colorPanel.main = {
@@ -48,3 +57,34 @@ creationGuiConfig.colorPanel.icons = {
         babyBlue: 0x1be8d7
     }
 };
+
+creationGuiConfig.partsPanel.main = {
+    x: 350,
+    y: 150,
+    atlusKey: "ui",
+    textureSrc: "green_panel.png",
+    alpha: 0.5
+};
+creationGuiConfig.partsPanel.upButton = {
+    x: creationGuiConfig.partsPanel.main.x + 50,
+    y: creationGuiConfig.partsPanel.main.y - 50,
+    atlusKey: "ui",
+    textureSrc: "grey_arrowUpWhite.png"
+};
+creationGuiConfig.partsPanel.downButton = {
+    x: creationGuiConfig.partsPanel.main.x + 50,
+    y: creationGuiConfig.partsPanel.main.y + 150,
+    atlusKey: "ui",
+    textureSrc: "grey_arrowDownWhite.png"
+};
+creationGuiConfig.partsPanel.captionText = {
+    text: "Sentinel Part",
+    font: {
+        font: "14px Arial Black",
+        fill: "white",
+        stroke: "black",
+        strokeThickness: 5
+    },
+    x: creationGuiConfig.partsPanel.main.x,
+    y: creationGuiConfig.partsPanel.main.y - 25
+}

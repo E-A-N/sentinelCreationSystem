@@ -122,6 +122,56 @@ uiTest.customModel = {
         tint: 0xFFFFFF
     }
 }
+uiTest.createPartsPanelItems = () => {
+    const items = {}
+    const partsPanelData = [
+        creationGuiConfig.partsPanel.main.x,
+        creationGuiConfig.partsPanel.main.y,
+        creationGuiConfig.partsPanel.main.atlusKey,
+        creationGuiConfig.partsPanel.main.textureSrc
+    ];
+    const partsPanelButton = game.add.sprite(...partsPanelData);
+    partsPanelButton.alpha = creationGuiConfig.partsPanel.main.alpha;
+    items.mainButton = partsPanelButton;
+
+    const upButtonData = [
+        creationGuiConfig.partsPanel.upButton.x,
+        creationGuiConfig.partsPanel.upButton.y,
+        creationGuiConfig.partsPanel.upButton.atlusKey,
+        creationGuiConfig.partsPanel.upButton.textureSrc
+    ];
+    const upButton = game.add.sprite(...upButtonData);
+    items.upButton = upButton;
+
+    const downButtonData = [
+        creationGuiConfig.partsPanel.downButton.x,
+        creationGuiConfig.partsPanel.downButton.y,
+        creationGuiConfig.partsPanel.downButton.atlusKey,
+        creationGuiConfig.partsPanel.downButton.textureSrc
+    ];
+    const downButton = game.add.sprite(...downButtonData);
+    items.downButton = downButton;
+
+    const captionTextData = [
+        creationGuiConfig.partsPanel.captionText.x,
+        creationGuiConfig.partsPanel.captionText.y,
+        creationGuiConfig.partsPanel.captionText.text,
+        creationGuiConfig.partsPanel.captionText.font
+    ];
+    const captionText = game.add.text(...captionTextData);
+    items.captionText = captionText;
+
+    const partsIconsData = [
+        creationGuiConfig.partsPanel.main.x,
+        creationGuiConfig.partsPanel.main.y,
+        creationGuiConfig.default.renderSuffix,
+        false //?????
+    ];
+    const partsIcons = uiTest.renderDroid(...partsIconsData);
+    items.partsIcons = partsIcons;
+
+    return items;
+};
 uiTest.createColorPanelItems = () => {
     const items = {}
     const colorPanelData = [
@@ -179,20 +229,21 @@ uiTest.create = function() {
     var renderSuffix = "$$0020.png";  //NOTE future suffix ex: $Default$0020.png
     //TODO: think about WHEN the part type should be appended to source string
 
+    let partsPanelItems = uiTest.createPartsPanelItems();
     //Sentinel Part(pt) UI
-    var ptPanelBtn = game.add.sprite(325, 150, "ui",panelLoc);
-    //"parts" UI coordinates
-    var px =  ptPanelBtn.x;
-    var py =  ptPanelBtn.y;
-
-    var ptUpBtn = game.add.sprite(px + 50, py - 50, "ui", upLoc);
-    var ptDownBtn = game.add.sprite(px + 50, py + 150,"ui", downLoc);
-
-    var ptCaptionText = "Sentinel Part";
-    var ptCaptionFont = { font: "14px Arial Black", fill: "white" };
-    var ptCaption = game.add.text(px, py - 25, ptCaptionText, ptCaptionFont);
-    ptCaption.stroke = "black";
-    ptCaption.strokeThickness = 5;
+    // var ptPanelBtn = game.add.sprite(325, 150, "ui",panelLoc);
+    // //"parts" UI coordinates
+    // var px =  ptPanelBtn.x;
+    // var py =  ptPanelBtn.y;
+    //
+    // var ptUpBtn = game.add.sprite(px + 50, py - 50, "ui", upLoc);
+    // var ptDownBtn = game.add.sprite(px + 50, py + 150,"ui", downLoc);
+    //
+    // var ptCaptionText = "Sentinel Part";
+    // var ptCaptionFont = { font: "14px Arial Black", fill: "white" };
+    // var ptCaption = game.add.text(px, py - 25, ptCaptionText, ptCaptionFont);
+    // ptCaption.stroke = "black";
+    // ptCaption.strokeThickness = 5;
 
     // uiTest.panelBtn.inputEnabled = true;
     // uiTest.panelBtn.input.enableDrag(true);
@@ -213,7 +264,13 @@ uiTest.create = function() {
     prCaption.stroke = "black";
     prCaption.strokeThickness = 8;
 
-    var parts = uiTest.renderDroid(px , py, renderSuffix, false);
+    // let partsData = [
+    //     partsPanelButton.mainButton.x,
+    //     partsPanelButton.mainButton.x,
+    //     renderSuffix,
+    //     false
+    // ];
+    // var parts = uiTest.renderDroid(...partsData);
     var previews = uiTest.renderDroid(prx, pry, renderSuffix, true);
     previews.forEach(function(p){
         uiTest.customModel[p._name] = {
@@ -223,7 +280,7 @@ uiTest.create = function() {
         }
     });
     //var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
-    uiTest.partSelectionPanel(parts, ptUpBtn, ptDownBtn);
+    uiTest.partSelectionPanel(partsPanelItems.partsIcons, partsPanelItems.upButton, partsPanelItems.downButton);
     uiTest.colorSelectionPanel(colorPanelItems.colorIcons, colorPanelItems.downButton, colorPanelItems.upButton);
 
 };
