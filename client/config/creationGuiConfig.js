@@ -5,6 +5,13 @@ const creationGuiConfig = {
     previewPanel:{}
 };
 
+creationGuiConfig.default.currentUserBuildModel = {
+    "name":{
+        type: "default",
+        src: "",
+        tint: 0xFFFFFF
+    }
+};
 creationGuiConfig.default.graphicSources = {
     renderSuffix: "$$0020.png", //NOTE future suffix ex: $Default$0020.png
     atlasKey: "ui",
