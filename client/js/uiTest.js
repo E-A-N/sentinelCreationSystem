@@ -1,21 +1,21 @@
-var uiTest = {};
+let uiTest = {};
 
 /**
     Current Droid Build contains all of the collected rendering information to
     display a users current N-Droid build.
     @global
 */
-uiTest.currentDroidBuild = {
-    userChoice: {},
+uiTest.customization = {
+    build: {},
     color: 0xFFFFFF,
     part: null,
     storeSentinelPart: (part) => {
-        uiTest.currentDroidBuild.part = part;
+        uiTest.customization.part = part;
     },
     storePartColor: (color) => {
-        uiTest.currentDroidBuild.color = color;
+        uiTest.customization.color = color;
     },
-    updatePreview: (model = uiTest.currentDroidBuild.userChoice) => {
+    updatePreview: (model = uiTest.customization.build) => {
         for (let part in model){
             //Add new graphic effects to droid parts here
             model[part].src.tint = model[part].tint;
@@ -24,33 +24,33 @@ uiTest.currentDroidBuild = {
 };
 uiTest.preload = function(){
     uiTest.btnKey = "btn1";
-    uiTest.currentDroidBuild.color = creationGuiConfig.default.graphicSources.colors["red"];
-    uiTest.currentDroidBuild.part  = null;
+    uiTest.customization.color = creationGuiConfig.default.graphicSources.colors["red"];
+    uiTest.customization.part  = null;
     uiTest._sType  = "default";
     game.stage.backgroundColor = '#85b5e1';
     game.load.atlasJSONHash("ui", "assets/sprites/ui/spriteSheet.png", "assets/sprites/ui/references.json");
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
 };
 uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
-    var names = Object.keys(colors);
-    var icons = [];
-    var suffix = "$$0020.png";
+    let names = Object.keys(colors);
+    let icons = [];
+    let suffix = "$$0020.png";
 
     icons = names.map(function(c, index){
-        var iColor = game.add.sprite(x, y, "dCreate", "n2_closeAxel"+ suffix);
+        let iColor = game.add.sprite(x, y, "dCreate", "n2_closeAxel"+ suffix);
         iColor.x += iColor.width;
         iColor.tint = colors[c];
         iColor.visible = isVisible;
         iColor.inputEnabled = true;
 
-        //Set UI Type so button can be interfaced with dynamically
+        //Set UI Type so button can be clicked to set customization color dynamically
         iColor._uiType = "colorBtn";
         //iColor.input.enableDrag(true);
         iColor.events.onInputDown.add(function(){
-            //uiTest.currentDroidBuild.part.tint = uiTest.currentDroidBuild.color;
-            var name = uiTest.currentDroidBuild.part._name;
-            uiTest.currentDroidBuild.userChoice[name].tint = iColor.tint //
-            uiTest.currentDroidBuild.updatePreview();
+            //uiTest.customization.part.tint = uiTest.customization.color;
+            let name = uiTest.customization.part._name;
+            uiTest.customization.build[name].tint = iColor.tint //
+            uiTest.customization.updatePreview();
         }, iColor);
         return iColor
     });
@@ -58,74 +58,69 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
     return icons
 }
 uiTest.colorSelectionPanel = function(colorCollection, leftSelect, rightSelect){
-    var current = 0;
+    let current = 0;
     colorCollection[0].visible = true;
     leftSelect.inputEnabled = true;
     rightSelect.inputEnabled = true;
     //TODO: create event emitter that updates the preview panel when a button is clicked
     leftSelect.events.onInputDown.add(function(){
         colorCollection[current].visible = false;
-        var canMoveLeft = current > 0;
+        let canMoveLeft = current > 0;
         current = canMoveLeft ? current - 1 : colorCollection.length - 1;
         colorCollection[current].visible = true;
 
-        //TODO: find a way to use the uiTest.colors object instead
-        uiTest.currentDroidBuild.storePartColor(colorCollection[current].tint);
-        uiTest.currentDroidBuild.updatePreview();
+
+        uiTest.customization.storePartColor(colorCollection[current].tint);
+        uiTest.customization.updatePreview();
     });
     rightSelect.events.onInputDown.add(function(){
         colorCollection[current].visible = false;
-        var canMoveRight = current < colorCollection.length - 1;
+        let canMoveRight = current < colorCollection.length - 1;
         current = canMoveRight ? current + 1 : 0;
         colorCollection[current].visible = true;
 
-        //TODO: find a way to use the uiTest.colors object instead
-        uiTest.currentDroidBuild.storePartColor(colorCollection[current].tint);
-        uiTest.currentDroidBuild.updatePreview();
+        uiTest.customization.storePartColor(colorCollection[current].tint);
+        uiTest.customization.updatePreview();
     });
 };
-// uiTest.storeSentinelPart = function(part){
-//     uiTest.currentDroidBuild.part = part;
-// };
 uiTest.partSelectionPanel = function(partCollection, leftSelect, rightSelect){
-    var current = 0;
+    let current = 0;
     partCollection[0].visible = true;
     leftSelect.inputEnabled = true;
     rightSelect.inputEnabled = true;
     leftSelect.events.onInputDown.add(function(){
         partCollection[current].visible = false;
-        var canMoveLeft = current > 0;
+        let canMoveLeft = current > 0;
         current = canMoveLeft ? current - 1 : partCollection.length - 1;
         partCollection[current].visible = true;
-        uiTest.currentDroidBuild.storeSentinelPart(partCollection[current]);
-        uiTest.currentDroidBuild.updatePreview();
+        uiTest.customization.storeSentinelPart(partCollection[current]);
+        uiTest.customization.updatePreview();
     });
     rightSelect.events.onInputDown.add(function(){
         partCollection[current].visible = false;
-        var canMoveRight = current < partCollection.length - 1;
+        let canMoveRight = current < partCollection.length - 1;
         current = canMoveRight ? current + 1 : 0;
         partCollection[current].visible = true;
-        uiTest.currentDroidBuild.storeSentinelPart(partCollection[current]);
-        uiTest.currentDroidBuild.updatePreview();
+        uiTest.customization.storeSentinelPart(partCollection[current]);
+        uiTest.customization.updatePreview();
     });
 };
-
 uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     //Note: isVisible effects preview only because partSelection preview updates
     //every time it's button is pressed
-    var parts = [];
+    let parts = [];
 
     //render parts as visible but none collidable objects
     //TODO: add core uiTest.fCore = game.add.image(x, y, "dCreate", "n9_farCore" + suffix);
-    var fSpike = game.add.image(x, y, "dCreate", "n9_farSpike" + suffix);
-    var fLeg = game.add.image(x, y, "dCreate", "n8_farLeg"+ suffix);
-    var fFoot = game.add.image(x, y, "dCreate", "n7_farFoot"+ suffix);
-    var fAxel = game.add.image(x, y, "dCreate", "n6_farAxel"+ suffix);
-    var cSpike = game.add.image(x, y, "dCreate", "n5_closeSpike"+ suffix);
-    var cLeg = game.add.image(x, y, "dCreate", "n4_closeLeg"+ suffix);
-    var cFoot = game.add.image(x, y, "dCreate", "n3_closeFoot"+ suffix);
-    var cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
-    var eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
+    let fSpike = game.add.image(x, y, "dCreate", "n9_farSpike" + suffix);
+    let fLeg = game.add.image(x, y, "dCreate", "n8_farLeg"+ suffix);
+    let fFoot = game.add.image(x, y, "dCreate", "n7_farFoot"+ suffix);
+    let fAxel = game.add.image(x, y, "dCreate", "n6_farAxel"+ suffix);
+    let cSpike = game.add.image(x, y, "dCreate", "n5_closeSpike"+ suffix);
+    let cLeg = game.add.image(x, y, "dCreate", "n4_closeLeg"+ suffix);
+    let cFoot = game.add.image(x, y, "dCreate", "n3_closeFoot"+ suffix);
+    let cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
+    let eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
 
     fSpike._name = "fSpike";
     fLeg._name = "fLeg";
@@ -138,7 +133,7 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     eye._name = "eye";
 
     //Set Default UI Part to Color
-    uiTest.currentDroidBuild.part = fSpike;
+    uiTest.customization.part = fSpike;
 
     parts.push(fSpike);
     parts.push(fLeg);
@@ -286,7 +281,7 @@ uiTest.createPreviewPanelItems = () => {
 
     //Build a default user N-droid build for user to see
     items.previewIcons.forEach(function(p){
-        uiTest.currentDroidBuild.userChoice[p._name] = {
+        uiTest.customization.build[p._name] = {
             src: p,
             tint: p.tint
             //type: p_type,

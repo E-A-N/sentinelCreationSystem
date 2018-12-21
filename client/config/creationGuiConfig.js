@@ -5,7 +5,7 @@ const creationGuiConfig = {
     previewPanel:{}
 };
 
-creationGuiConfig.default.currentUserBuildModel = {
+creationGuiConfig.default.customizationModel = {
     "name":{
         type: "default",
         src: "",
