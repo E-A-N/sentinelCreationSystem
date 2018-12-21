@@ -122,6 +122,53 @@ uiTest.customModel = {
         tint: 0xFFFFFF
     }
 }
+uiTest.renderDroid = function(x, y, suffix, isVisible = true){
+
+    var parts = [];
+
+    //render parts as visible but none collidable objects
+    //TODO: add core uiTest.fCore = game.add.image(x, y, "dCreate", "n9_farCore" + suffix);
+    var fSpike = game.add.image(x, y, "dCreate", "n9_farSpike" + suffix);
+    var fLeg = game.add.image(x, y, "dCreate", "n8_farLeg"+ suffix);
+    var fFoot = game.add.image(x, y, "dCreate", "n7_farFoot"+ suffix);
+    var fAxel = game.add.image(x, y, "dCreate", "n6_farAxel"+ suffix);
+    var cSpike = game.add.image(x, y, "dCreate", "n5_closeSpike"+ suffix);
+    var cLeg = game.add.image(x, y, "dCreate", "n4_closeLeg"+ suffix);
+    var cFoot = game.add.image(x, y, "dCreate", "n3_closeFoot"+ suffix);
+    var cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
+    var eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
+
+    fSpike._name = "fSpike";
+    fLeg._name = "fLeg";
+    fFoot._name = "fFoot";
+    fAxel._name = "fAxel";
+    cSpike._name = "cSpike";
+    cLeg._name = "cLeg";
+    cFoot._name = "cFoot";
+    cAxel._name = "cAxel";
+    eye._name = "eye";
+
+    //Set Default UI Part to Color
+    uiTest._sPart = fSpike;
+
+    parts.push(fSpike);
+    parts.push(fLeg);
+    parts.push(fFoot);
+    parts.push(fAxel);
+    parts.push(cSpike);
+    parts.push(cLeg);
+    parts.push(cFoot);
+    parts.push(cAxel);
+    parts.push(eye);
+
+    parts = parts.map(function(p){
+        p.visible = isVisible;
+        p._uiType = "droidPart"; //allows button to be interfaced with dynamically
+        return p;
+    });
+
+    return parts;
+}
 uiTest.createPartsPanelItems = () => {
     const items = {}
     const partsPanelData = [
@@ -164,7 +211,7 @@ uiTest.createPartsPanelItems = () => {
     const partsIconsData = [
         creationGuiConfig.partsPanel.main.x,
         creationGuiConfig.partsPanel.main.y,
-        creationGuiConfig.default.renderSuffix,
+        creationGuiConfig.default.graphicSources.renderSuffix,
         false //?????
     ];
     const partsIcons = uiTest.renderDroid(...partsIconsData);
@@ -285,52 +332,6 @@ uiTest.create = function() {
 
 };
 
-uiTest.renderDroid = function(x, y, suffix, isVisible = true){
 
-    var parts = [];
-
-    //render parts as visible but none collidable objects
-    //TODO: add core uiTest.fCore = game.add.image(x, y, "dCreate", "n9_farCore" + suffix);
-    var fSpike = game.add.image(x, y, "dCreate", "n9_farSpike" + suffix);
-    var fLeg = game.add.image(x, y, "dCreate", "n8_farLeg"+ suffix);
-    var fFoot = game.add.image(x, y, "dCreate", "n7_farFoot"+ suffix);
-    var fAxel = game.add.image(x, y, "dCreate", "n6_farAxel"+ suffix);
-    var cSpike = game.add.image(x, y, "dCreate", "n5_closeSpike"+ suffix);
-    var cLeg = game.add.image(x, y, "dCreate", "n4_closeLeg"+ suffix);
-    var cFoot = game.add.image(x, y, "dCreate", "n3_closeFoot"+ suffix);
-    var cAxel = game.add.image(x, y, "dCreate", "n2_closeAxel"+ suffix);
-    var eye = game.add.image(x, y, "dCreate", "n1_closeEyek"+ suffix);  //TODO: fix spelling error in sprite sheet asset
-
-    fSpike._name = "fSpike";
-    fLeg._name = "fLeg";
-    fFoot._name = "fFoot";
-    fAxel._name = "fAxel";
-    cSpike._name = "cSpike";
-    cLeg._name = "cLeg";
-    cFoot._name = "cFoot";
-    cAxel._name = "cAxel";
-    eye._name = "eye";
-
-    //Set Default UI Part to Color
-    uiTest._sPart = fSpike;
-
-    parts.push(fSpike);
-    parts.push(fLeg);
-    parts.push(fFoot);
-    parts.push(fAxel);
-    parts.push(cSpike);
-    parts.push(cLeg);
-    parts.push(cFoot);
-    parts.push(cAxel);
-    parts.push(eye);
-
-    parts = parts.map(function(p){
-        p.visible = isVisible;
-        p._uiType = "droidPart"; //allows button to be interfaced with dynamically
-        return p;
-    });
-
-    return parts;
-}
 
 uiTest.update = function() {};

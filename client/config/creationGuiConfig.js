@@ -1,6 +1,6 @@
 const creationGuiConfig = {
-    default:{}
-    colorPanel:{}
+    default:{},
+    colorPanel:{},
     partsPanel:{}
 };
 
