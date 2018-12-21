@@ -276,24 +276,12 @@ uiTest.create = function() {
     var renderSuffix = "$$0020.png";  //NOTE future suffix ex: $Default$0020.png
     //TODO: think about WHEN the part type should be appended to source string
 
-    let partsPanelItems = uiTest.createPartsPanelItems();
-    //Sentinel Part(pt) UI
-    // var ptPanelBtn = game.add.sprite(325, 150, "ui",panelLoc);
-    // //"parts" UI coordinates
-    // var px =  ptPanelBtn.x;
-    // var py =  ptPanelBtn.y;
-    //
-    // var ptUpBtn = game.add.sprite(px + 50, py - 50, "ui", upLoc);
-    // var ptDownBtn = game.add.sprite(px + 50, py + 150,"ui", downLoc);
-    //
-    // var ptCaptionText = "Sentinel Part";
-    // var ptCaptionFont = { font: "14px Arial Black", fill: "white" };
-    // var ptCaption = game.add.text(px, py - 25, ptCaptionText, ptCaptionFont);
-    // ptCaption.stroke = "black";
-    // ptCaption.strokeThickness = 5;
+
 
     // uiTest.panelBtn.inputEnabled = true;
     // uiTest.panelBtn.input.enableDrag(true);
+
+    let partsPanelItems = uiTest.createPartsPanelItems();
     let colorPanelItems = uiTest.createColorPanelItems();
 
     //Sentinel Preview(pr) UI
@@ -311,13 +299,6 @@ uiTest.create = function() {
     prCaption.stroke = "black";
     prCaption.strokeThickness = 8;
 
-    // let partsData = [
-    //     partsPanelButton.mainButton.x,
-    //     partsPanelButton.mainButton.x,
-    //     renderSuffix,
-    //     false
-    // ];
-    // var parts = uiTest.renderDroid(...partsData);
     var previews = uiTest.renderDroid(prx, pry, renderSuffix, true);
     previews.forEach(function(p){
         uiTest.customModel[p._name] = {
@@ -326,7 +307,7 @@ uiTest.create = function() {
             //type: p_type,
         }
     });
-    //var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
+
     uiTest.partSelectionPanel(partsPanelItems.partsIcons, partsPanelItems.upButton, partsPanelItems.downButton);
     uiTest.colorSelectionPanel(colorPanelItems.colorIcons, colorPanelItems.downButton, colorPanelItems.upButton);
 

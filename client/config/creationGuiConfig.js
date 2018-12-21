@@ -12,7 +12,7 @@ creationGuiConfig.default.graphicSources = {
 };
 
 creationGuiConfig.colorPanel.main = {
-    x: 450,
+    x: 475,
     y: 150,
     atlusKey: "ui",
     textureSrc: "green_panel.png",
