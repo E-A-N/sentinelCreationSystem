@@ -122,6 +122,55 @@ uiTest.customModel = {
         tint: 0xFFFFFF
     }
 }
+uiTest.createColorPanelItems = () => {
+    const items = {}
+    const colorPanelData = [
+        creationGuiConfig.colorPanel.main.x,
+        creationGuiConfig.colorPanel.main.y,
+        creationGuiConfig.colorPanel.main.atlusKey,
+        creationGuiConfig.colorPanel.main.textureSrc
+    ];
+    const colorPanelButton = game.add.sprite(...colorPanelData);
+    colorPanelButton.alpha = creationGuiConfig.colorPanel.main.alpha;
+    items.mainButton = colorPanelButton;
+
+    const upButtonData = [
+        creationGuiConfig.colorPanel.upButton.x,
+        creationGuiConfig.colorPanel.upButton.y,
+        creationGuiConfig.colorPanel.upButton.atlusKey,
+        creationGuiConfig.colorPanel.upButton.textureSrc
+    ];
+    const upButton = game.add.sprite(...upButtonData);
+    items.upButton = upButton;
+
+    const downButtonData = [
+        creationGuiConfig.colorPanel.downButton.x,
+        creationGuiConfig.colorPanel.downButton.y,
+        creationGuiConfig.colorPanel.downButton.atlusKey,
+        creationGuiConfig.colorPanel.downButton.textureSrc
+    ];
+    const downButton = game.add.sprite(...downButtonData);
+    items.downButton = downButton;
+
+    const captionTextData = [
+        creationGuiConfig.colorPanel.captionText.x,
+        creationGuiConfig.colorPanel.captionText.y,
+        creationGuiConfig.colorPanel.captionText.text,
+        creationGuiConfig.colorPanel.captionText.font
+    ];
+    const captionText = game.add.text(...captionTextData);
+    items.captionText = captionText;
+
+    const colorIconsData = [
+        creationGuiConfig.colorPanel.icons.x,
+        creationGuiConfig.colorPanel.icons.y,
+        creationGuiConfig.colorPanel.icons.colors
+    ];
+    const colorIcons = uiTest.renderColorIcons(...colorIconsData);
+    items.colorIcons = colorIcons;
+
+    return items;
+};
 uiTest.create = function() {
 
     var panelLoc = "green_panel.png";
@@ -147,21 +196,7 @@ uiTest.create = function() {
 
     // uiTest.panelBtn.inputEnabled = true;
     // uiTest.panelBtn.input.enableDrag(true);
-
-    var cPanelBtn = game.add.sprite(450, 150, "ui",panelLoc);
-    cPanelBtn.alpha = 0.5;
-    var cUpBtn = game.add.sprite(cPanelBtn.x + 50, cPanelBtn.y - 50, "ui", upLoc);
-    var cDownBtn = game.add.sprite(cPanelBtn.x + 50, cPanelBtn.y + 150,"ui", downLoc);
-
-    //color UI coordinates
-    var cx = cPanelBtn.x;
-    var cy = cPanelBtn.y;
-
-    var cCaptionText = "Material Color";
-    var cCaptionFont = { font: "14px Arial Black", fill: "white" };
-    var cCaption = game.add.text(cx, cy - 25, cCaptionText, cCaptionFont);
-    cCaption.stroke = "black";
-    cCaption.strokeThickness = 5;
+    let colorPanelItems = uiTest.createColorPanelItems();
 
     //Sentinel Preview(pr) UI
     var prPanelBtn = game.add.sprite(uiTest.preview.x, uiTest.preview.y, "ui",panelLoc);
@@ -187,9 +222,9 @@ uiTest.create = function() {
             //type: p_type,
         }
     });
-    var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
+    //var colorIcons = uiTest.renderColorIcons(cx - 100, cy + 10, uiTest.colors);
     uiTest.partSelectionPanel(parts, ptUpBtn, ptDownBtn);
-    uiTest.colorSelectionPanel(colorIcons, cUpBtn, cDownBtn);
+    uiTest.colorSelectionPanel(colorPanelItems.colorIcons, colorPanelItems.downButton, colorPanelItems.upButton);
 
 };
 
