@@ -265,8 +265,8 @@ uiTest.createPreviewPanelItems = () => {
         creationGuiConfig.previewPanel.main.atlasKey,
         creationGuiConfig.previewPanel.main.textureSrc
     ];
-    // items.mainButton = game.add.sprite(...previewPanelData);
-    // items.mainButton.alpha = creationGuiConfig.previewPanel.main.alpha;
+    items.mainButton = game.add.sprite(...previewPanelData);
+    items.mainButton.alpha = creationGuiConfig.previewPanel.main.alpha;
 
     const captionTextData = [
         creationGuiConfig.previewPanel.captionText.x,
@@ -284,17 +284,19 @@ uiTest.createPreviewPanelItems = () => {
     ];
     items.previewIcons = uiTest.renderDroid(...previewIconsData);
 
+    //Build a default user N-droid build for user to see
+    items.previewIcons.forEach(function(p){
+        uiTest.currentUserBuild[p._name] = {
+            src: p,
+            tint: p.tint
+            //type: p_type,
+        }
+    });
+
     return items;
 };
+
 uiTest.create = function() {
-
-    var panelLoc = "green_panel.png";
-    var upLoc = "grey_arrowUpWhite.png";
-    var downLoc = "grey_arrowDownWhite.png";
-    var renderSuffix = "$$0020.png";  //NOTE future suffix ex: $Default$0020.png
-    //TODO: think about WHEN the part type should be appended to source string
-
-
 
     // uiTest.panelBtn.inputEnabled = true;
     // uiTest.panelBtn.input.enableDrag(true);
@@ -303,34 +305,8 @@ uiTest.create = function() {
     let colorPanelItems = uiTest.createColorPanelItems();
     let previewPanelItems = uiTest.createPreviewPanelItems();
 
-    //Sentinel Preview(pr) UI
-    //var prPanelBtn = game.add.sprite(uiTest.preview.x, uiTest.preview.y, "ui",panelLoc);
-    //"parts" UI coordinates
-    //var prx =  prPanelBtn.x;
-    //var pry =  prPanelBtn.y;
-
-    // var prUpBtn = game.add.sprite(prx + 50, pry - 50, "ui", upLoc);
-    // var prDownBtn = game.add.sprite(prx + 50, pry + 150,"ui", downLoc);
-
-    // var prCaptionText = "~Preview~";
-    // var prCaptionFont = { font: "24px Arial Black", fill: "white" };
-    // var prCaption = game.add.text(prx - 20, pry - 35, prCaptionText, prCaptionFont);
-    // prCaption.stroke = "black";
-    // prCaption.strokeThickness = 8;
-    //
-    //let previews = uiTest.renderDroid(prx, pry, renderSuffix, true);
-    let previews = previewPanelItems.previewIcons
-    previews.forEach(function(p){
-        uiTest.currentUserBuild[p._name] = {
-            src: p,
-            tint: p.tint
-            //type: p_type,
-        }
-    });
-
     uiTest.partSelectionPanel(partsPanelItems.partsIcons, partsPanelItems.upButton, partsPanelItems.downButton);
     uiTest.colorSelectionPanel(colorPanelItems.colorIcons, colorPanelItems.downButton, colorPanelItems.upButton);
 
 };
-
 uiTest.update = function() {};
