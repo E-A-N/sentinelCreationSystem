@@ -1,32 +1,26 @@
 var uiTest = {};
+uiTest.currentUserBuild = {
+    "eye":{
+        type: "default",
+        src: {},
+        tint: 0xFFFFFF
+    }
+}
 uiTest.preload = function(){
     uiTest.btnKey = "btn1";
-    uiTest._sColor = uiTest.colors["red"];
+    uiTest._sColor = creationGuiConfig.default.graphicSources.colors["red"];
     uiTest._sPart  = null;
     uiTest._sType  = "default";
-    uiTest.preview = {
-        x: 75,
-        y: 150
-    };
+    // uiTest.preview = {
+    //     x: 75,
+    //     y: 150
+    // };
     game.stage.backgroundColor = '#85b5e1';
     game.load.atlasJSONHash("ui", "assets/sprites/ui/spriteSheet.png", "assets/sprites/ui/references.json");
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
 };
-
-uiTest.colors = {
-    red: 0xe50505,
-    blue: 0x065ce5,
-    green: 0x26b203,
-    yellow: 0xeae71e,
-    orange: 0xe88504,
-    purple: 0x93008c,
-    grey: 0x777477,
-    dark: 0x282828,
-    light: 0xf2f2f2,
-    babyBlue: 0x1be8d7,
-};
 uiTest.updatePreview = function(){
-    var model = uiTest.customModel;
+    var model = uiTest.currentUserBuild;
     for (var p in model){
         model[p].src.tint = model[p].tint;
         //console.log(p);
@@ -52,7 +46,7 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
         iColor.events.onInputDown.add(function(){
             //uiTest._sPart.tint = uiTest._sColor;
             var name = uiTest._sPart._name;
-            uiTest.customModel[name].tint = iColor.tint //
+            uiTest.currentUserBuild[name].tint = iColor.tint //
             uiTest.updatePreview();
         }, iColor);
         return iColor
@@ -115,15 +109,10 @@ uiTest.partSelectionPanel = function(ray, leftSelect, rightSelect){
         uiTest.updatePreview();
     });
 };
-uiTest.customModel = {
-    "eye":{
-        type: "default",
-        src: {},
-        tint: 0xFFFFFF
-    }
-}
-uiTest.renderDroid = function(x, y, suffix, isVisible = true){
 
+uiTest.renderDroid = function(x, y, suffix, isVisible = true){
+    //Note: isVisible effects preview only because partSelection preview updates
+    //every time it's button is pressed
     var parts = [];
 
     //render parts as visible but none collidable objects
@@ -268,6 +257,35 @@ uiTest.createColorPanelItems = () => {
 
     return items;
 };
+uiTest.createPreviewPanelItems = () => {
+    const items = {}
+    const previewPanelData = [
+        creationGuiConfig.previewPanel.main.x,
+        creationGuiConfig.previewPanel.main.y,
+        creationGuiConfig.previewPanel.main.atlasKey,
+        creationGuiConfig.previewPanel.main.textureSrc
+    ];
+    // items.mainButton = game.add.sprite(...previewPanelData);
+    // items.mainButton.alpha = creationGuiConfig.previewPanel.main.alpha;
+
+    const captionTextData = [
+        creationGuiConfig.previewPanel.captionText.x,
+        creationGuiConfig.previewPanel.captionText.y,
+        creationGuiConfig.previewPanel.captionText.text,
+        creationGuiConfig.previewPanel.captionText.font
+    ];
+    items.captionText = game.add.text(...captionTextData);
+
+    const previewIconsData = [
+        creationGuiConfig.previewPanel.main.x,
+        creationGuiConfig.previewPanel.main.y,
+        creationGuiConfig.default.graphicSources.renderSuffix,
+        true
+    ];
+    items.previewIcons = uiTest.renderDroid(...previewIconsData);
+
+    return items;
+};
 uiTest.create = function() {
 
     var panelLoc = "green_panel.png";
@@ -283,25 +301,27 @@ uiTest.create = function() {
 
     let partsPanelItems = uiTest.createPartsPanelItems();
     let colorPanelItems = uiTest.createColorPanelItems();
+    let previewPanelItems = uiTest.createPreviewPanelItems();
 
     //Sentinel Preview(pr) UI
-    var prPanelBtn = game.add.sprite(uiTest.preview.x, uiTest.preview.y, "ui",panelLoc);
+    //var prPanelBtn = game.add.sprite(uiTest.preview.x, uiTest.preview.y, "ui",panelLoc);
     //"parts" UI coordinates
-    var prx =  prPanelBtn.x;
-    var pry =  prPanelBtn.y;
+    //var prx =  prPanelBtn.x;
+    //var pry =  prPanelBtn.y;
 
     // var prUpBtn = game.add.sprite(prx + 50, pry - 50, "ui", upLoc);
     // var prDownBtn = game.add.sprite(prx + 50, pry + 150,"ui", downLoc);
 
-    var prCaptionText = "~Preview~";
-    var prCaptionFont = { font: "24px Arial Black", fill: "white" };
-    var prCaption = game.add.text(prx - 20, pry - 35, prCaptionText, prCaptionFont);
-    prCaption.stroke = "black";
-    prCaption.strokeThickness = 8;
-
-    var previews = uiTest.renderDroid(prx, pry, renderSuffix, true);
+    // var prCaptionText = "~Preview~";
+    // var prCaptionFont = { font: "24px Arial Black", fill: "white" };
+    // var prCaption = game.add.text(prx - 20, pry - 35, prCaptionText, prCaptionFont);
+    // prCaption.stroke = "black";
+    // prCaption.strokeThickness = 8;
+    //
+    //let previews = uiTest.renderDroid(prx, pry, renderSuffix, true);
+    let previews = previewPanelItems.previewIcons
     previews.forEach(function(p){
-        uiTest.customModel[p._name] = {
+        uiTest.currentUserBuild[p._name] = {
             src: p,
             tint: p.tint
             //type: p_type,
@@ -312,7 +332,5 @@ uiTest.create = function() {
     uiTest.colorSelectionPanel(colorPanelItems.colorIcons, colorPanelItems.downButton, colorPanelItems.upButton);
 
 };
-
-
 
 uiTest.update = function() {};
