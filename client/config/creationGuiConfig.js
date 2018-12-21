@@ -6,6 +6,7 @@ const creationGuiConfig = {
 
 creationGuiConfig.default.graphicSources = {
     renderSuffix: "$$0020.png",
+    atlasKey: "ui",
     panelGraphic: "green_panel.png",
     upButtonIcon: "grey_arrowUpWhite.png",
     downButtonIcon: "grey_arrowDownWhite.png"
@@ -14,21 +15,21 @@ creationGuiConfig.default.graphicSources = {
 creationGuiConfig.colorPanel.main = {
     x: 475,
     y: 150,
-    atlusKey: "ui",
-    textureSrc: "green_panel.png",
+    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
+    textureSrc: creationGuiConfig.default.graphicSources.panelGraphic,
     alpha: 0.5
 };
 creationGuiConfig.colorPanel.upButton = {
     x: creationGuiConfig.colorPanel.main.x + 50,
     y: creationGuiConfig.colorPanel.main.y - 50,
-    atlusKey: "ui",
-    textureSrc: "grey_arrowUpWhite.png"
+    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
+    textureSrc: creationGuiConfig.default.graphicSources.upButtonIcon
 };
 creationGuiConfig.colorPanel.downButton = {
     x: creationGuiConfig.colorPanel.main.x + 50,
     y: creationGuiConfig.colorPanel.main.y + 150,
-    atlusKey: "ui",
-    textureSrc: "grey_arrowDownWhite.png"
+    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
+    textureSrc: creationGuiConfig.default.graphicSources.downButtonIcon
 };
 creationGuiConfig.colorPanel.captionText = {
     text: "Material Color",
@@ -61,21 +62,21 @@ creationGuiConfig.colorPanel.icons = {
 creationGuiConfig.partsPanel.main = {
     x: 350,
     y: 150,
-    atlusKey: "ui",
-    textureSrc: "green_panel.png",
+    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
+    textureSrc: creationGuiConfig.default.graphicSources.panelGraphic,
     alpha: 0.5
 };
 creationGuiConfig.partsPanel.upButton = {
     x: creationGuiConfig.partsPanel.main.x + 50,
     y: creationGuiConfig.partsPanel.main.y - 50,
-    atlusKey: "ui",
-    textureSrc: "grey_arrowUpWhite.png"
+    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
+    textureSrc: creationGuiConfig.default.graphicSources.upButtonIcon
 };
 creationGuiConfig.partsPanel.downButton = {
     x: creationGuiConfig.partsPanel.main.x + 50,
     y: creationGuiConfig.partsPanel.main.y + 150,
-    atlusKey: "ui",
-    textureSrc: "grey_arrowDownWhite.png"
+    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
+    textureSrc: creationGuiConfig.default.graphicSources.downButtonIcon
 };
 creationGuiConfig.partsPanel.captionText = {
     text: "Sentinel Part",

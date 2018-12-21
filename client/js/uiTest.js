@@ -174,7 +174,7 @@ uiTest.createPartsPanelItems = () => {
     const partsPanelData = [
         creationGuiConfig.partsPanel.main.x,
         creationGuiConfig.partsPanel.main.y,
-        creationGuiConfig.partsPanel.main.atlusKey,
+        creationGuiConfig.partsPanel.main.atlasKey,
         creationGuiConfig.partsPanel.main.textureSrc
     ];
     const partsPanelButton = game.add.sprite(...partsPanelData);
@@ -184,7 +184,7 @@ uiTest.createPartsPanelItems = () => {
     const upButtonData = [
         creationGuiConfig.partsPanel.upButton.x,
         creationGuiConfig.partsPanel.upButton.y,
-        creationGuiConfig.partsPanel.upButton.atlusKey,
+        creationGuiConfig.partsPanel.upButton.atlasKey,
         creationGuiConfig.partsPanel.upButton.textureSrc
     ];
     const upButton = game.add.sprite(...upButtonData);
@@ -193,7 +193,7 @@ uiTest.createPartsPanelItems = () => {
     const downButtonData = [
         creationGuiConfig.partsPanel.downButton.x,
         creationGuiConfig.partsPanel.downButton.y,
-        creationGuiConfig.partsPanel.downButton.atlusKey,
+        creationGuiConfig.partsPanel.downButton.atlasKey,
         creationGuiConfig.partsPanel.downButton.textureSrc
     ];
     const downButton = game.add.sprite(...downButtonData);
@@ -224,7 +224,7 @@ uiTest.createColorPanelItems = () => {
     const colorPanelData = [
         creationGuiConfig.colorPanel.main.x,
         creationGuiConfig.colorPanel.main.y,
-        creationGuiConfig.colorPanel.main.atlusKey,
+        creationGuiConfig.colorPanel.main.atlasKey,
         creationGuiConfig.colorPanel.main.textureSrc
     ];
     const colorPanelButton = game.add.sprite(...colorPanelData);
@@ -234,7 +234,7 @@ uiTest.createColorPanelItems = () => {
     const upButtonData = [
         creationGuiConfig.colorPanel.upButton.x,
         creationGuiConfig.colorPanel.upButton.y,
-        creationGuiConfig.colorPanel.upButton.atlusKey,
+        creationGuiConfig.colorPanel.upButton.atlasKey,
         creationGuiConfig.colorPanel.upButton.textureSrc
     ];
     const upButton = game.add.sprite(...upButtonData);
@@ -243,7 +243,7 @@ uiTest.createColorPanelItems = () => {
     const downButtonData = [
         creationGuiConfig.colorPanel.downButton.x,
         creationGuiConfig.colorPanel.downButton.y,
-        creationGuiConfig.colorPanel.downButton.atlusKey,
+        creationGuiConfig.colorPanel.downButton.atlasKey,
         creationGuiConfig.colorPanel.downButton.textureSrc
     ];
     const downButton = game.add.sprite(...downButtonData);
