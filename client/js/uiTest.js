@@ -24,7 +24,7 @@ uiTest.customization = {
 };
 uiTest.preload = function(){
     uiTest.btnKey = "btn1";
-    uiTest.customization.color = creationGuiConfig.default.graphicSources.colors["red"];
+    uiTest.customization.color = creation.default.graphicSources.colors["red"];
     uiTest.customization.part  = null;
     uiTest._sType  = "default";
     game.stage.backgroundColor = '#85b5e1';
@@ -156,46 +156,46 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
 uiTest.createPartsPanelItems = () => {
     const items = {}
     const partsPanelData = [
-        creationGuiConfig.partsPanel.main.x,
-        creationGuiConfig.partsPanel.main.y,
-        creationGuiConfig.partsPanel.main.atlasKey,
-        creationGuiConfig.partsPanel.main.textureSrc
+        creation.partsPanel.main.x,
+        creation.partsPanel.main.y,
+        creation.partsPanel.main.atlasKey,
+        creation.partsPanel.main.textureSrc
     ];
     const partsPanelButton = game.add.sprite(...partsPanelData);
-    partsPanelButton.alpha = creationGuiConfig.partsPanel.main.alpha;
+    partsPanelButton.alpha = creation.partsPanel.main.alpha;
     items.mainButton = partsPanelButton;
 
     const upButtonData = [
-        creationGuiConfig.partsPanel.upButton.x,
-        creationGuiConfig.partsPanel.upButton.y,
-        creationGuiConfig.partsPanel.upButton.atlasKey,
-        creationGuiConfig.partsPanel.upButton.textureSrc
+        creation.partsPanel.upButton.x,
+        creation.partsPanel.upButton.y,
+        creation.partsPanel.upButton.atlasKey,
+        creation.partsPanel.upButton.textureSrc
     ];
     const upButton = game.add.sprite(...upButtonData);
     items.upButton = upButton;
 
     const downButtonData = [
-        creationGuiConfig.partsPanel.downButton.x,
-        creationGuiConfig.partsPanel.downButton.y,
-        creationGuiConfig.partsPanel.downButton.atlasKey,
-        creationGuiConfig.partsPanel.downButton.textureSrc
+        creation.partsPanel.downButton.x,
+        creation.partsPanel.downButton.y,
+        creation.partsPanel.downButton.atlasKey,
+        creation.partsPanel.downButton.textureSrc
     ];
     const downButton = game.add.sprite(...downButtonData);
     items.downButton = downButton;
 
     const captionTextData = [
-        creationGuiConfig.partsPanel.captionText.x,
-        creationGuiConfig.partsPanel.captionText.y,
-        creationGuiConfig.partsPanel.captionText.text,
-        creationGuiConfig.partsPanel.captionText.font
+        creation.partsPanel.captionText.x,
+        creation.partsPanel.captionText.y,
+        creation.partsPanel.captionText.text,
+        creation.partsPanel.captionText.font
     ];
     const captionText = game.add.text(...captionTextData);
     items.captionText = captionText;
 
     const partsIconsData = [
-        creationGuiConfig.partsPanel.main.x,
-        creationGuiConfig.partsPanel.main.y,
-        creationGuiConfig.default.graphicSources.renderSuffix,
+        creation.partsPanel.main.x,
+        creation.partsPanel.main.y,
+        creation.default.graphicSources.renderSuffix,
         false //?????
     ];
     const partsIcons = uiTest.renderDroid(...partsIconsData);
@@ -206,46 +206,46 @@ uiTest.createPartsPanelItems = () => {
 uiTest.createColorPanelItems = () => {
     const items = {}
     const colorPanelData = [
-        creationGuiConfig.colorPanel.main.x,
-        creationGuiConfig.colorPanel.main.y,
-        creationGuiConfig.colorPanel.main.atlasKey,
-        creationGuiConfig.colorPanel.main.textureSrc
+        creation.colorPanel.main.x,
+        creation.colorPanel.main.y,
+        creation.colorPanel.main.atlasKey,
+        creation.colorPanel.main.textureSrc
     ];
     const colorPanelButton = game.add.sprite(...colorPanelData);
-    colorPanelButton.alpha = creationGuiConfig.colorPanel.main.alpha;
+    colorPanelButton.alpha = creation.colorPanel.main.alpha;
     items.mainButton = colorPanelButton;
 
     const upButtonData = [
-        creationGuiConfig.colorPanel.upButton.x,
-        creationGuiConfig.colorPanel.upButton.y,
-        creationGuiConfig.colorPanel.upButton.atlasKey,
-        creationGuiConfig.colorPanel.upButton.textureSrc
+        creation.colorPanel.upButton.x,
+        creation.colorPanel.upButton.y,
+        creation.colorPanel.upButton.atlasKey,
+        creation.colorPanel.upButton.textureSrc
     ];
     const upButton = game.add.sprite(...upButtonData);
     items.upButton = upButton;
 
     const downButtonData = [
-        creationGuiConfig.colorPanel.downButton.x,
-        creationGuiConfig.colorPanel.downButton.y,
-        creationGuiConfig.colorPanel.downButton.atlasKey,
-        creationGuiConfig.colorPanel.downButton.textureSrc
+        creation.colorPanel.downButton.x,
+        creation.colorPanel.downButton.y,
+        creation.colorPanel.downButton.atlasKey,
+        creation.colorPanel.downButton.textureSrc
     ];
     const downButton = game.add.sprite(...downButtonData);
     items.downButton = downButton;
 
     const captionTextData = [
-        creationGuiConfig.colorPanel.captionText.x,
-        creationGuiConfig.colorPanel.captionText.y,
-        creationGuiConfig.colorPanel.captionText.text,
-        creationGuiConfig.colorPanel.captionText.font
+        creation.colorPanel.captionText.x,
+        creation.colorPanel.captionText.y,
+        creation.colorPanel.captionText.text,
+        creation.colorPanel.captionText.font
     ];
     const captionText = game.add.text(...captionTextData);
     items.captionText = captionText;
 
     const colorIconsData = [
-        creationGuiConfig.colorPanel.icons.x,
-        creationGuiConfig.colorPanel.icons.y,
-        creationGuiConfig.colorPanel.icons.colors
+        creation.colorPanel.icons.x,
+        creation.colorPanel.icons.y,
+        creation.colorPanel.icons.colors
     ];
     const colorIcons = uiTest.renderColorIcons(...colorIconsData);
     items.colorIcons = colorIcons;
@@ -255,26 +255,26 @@ uiTest.createColorPanelItems = () => {
 uiTest.createPreviewPanelItems = () => {
     const items = {}
     const previewPanelData = [
-        creationGuiConfig.previewPanel.main.x,
-        creationGuiConfig.previewPanel.main.y,
-        creationGuiConfig.previewPanel.main.atlasKey,
-        creationGuiConfig.previewPanel.main.textureSrc
+        creation.previewPanel.main.x,
+        creation.previewPanel.main.y,
+        creation.previewPanel.main.atlasKey,
+        creation.previewPanel.main.textureSrc
     ];
     items.mainButton = game.add.sprite(...previewPanelData);
-    items.mainButton.alpha = creationGuiConfig.previewPanel.main.alpha;
+    items.mainButton.alpha = creation.previewPanel.main.alpha;
 
     const captionTextData = [
-        creationGuiConfig.previewPanel.captionText.x,
-        creationGuiConfig.previewPanel.captionText.y,
-        creationGuiConfig.previewPanel.captionText.text,
-        creationGuiConfig.previewPanel.captionText.font
+        creation.previewPanel.captionText.x,
+        creation.previewPanel.captionText.y,
+        creation.previewPanel.captionText.text,
+        creation.previewPanel.captionText.font
     ];
     items.captionText = game.add.text(...captionTextData);
 
     const previewIconsData = [
-        creationGuiConfig.previewPanel.main.x,
-        creationGuiConfig.previewPanel.main.y,
-        creationGuiConfig.default.graphicSources.renderSuffix,
+        creation.previewPanel.main.x,
+        creation.previewPanel.main.y,
+        creation.default.graphicSources.renderSuffix,
         true
     ];
     items.previewIcons = uiTest.renderDroid(...previewIconsData);

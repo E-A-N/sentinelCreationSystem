@@ -1,18 +1,30 @@
-const creationGuiConfig = {
+const creation = {
     default:{},
     colorPanel:{},
     partsPanel:{},
     previewPanel:{}
 };
 
-creationGuiConfig.default.customizationModel = {
+creation.default.customizationModel = {
     "name":{
         type: "default",
         src: "",
         tint: 0xFFFFFF
     }
 };
-creationGuiConfig.default.graphicSources = {
+creation.default.parts = {
+    //NOTE: n{number} refers to ideal rendering order
+    farSpike:  "n9_farSpike",
+    farLeg:    "n8_farLeg",
+    farFoot:   "n7_farFoot",
+    farAxel:   "n6_farAxel",
+    closeSpike:"n5_closeSpike",
+    closeLeg:  "n4_closeLeg",
+    closeFoot: "n3_closeFoot",
+    closeAxel: "n2_closeAxel",
+    closeEyek: "n1_closeEyek", //remember to fix this spelling error in the texture packer
+};
+creation.default.graphicSources = {
     renderSuffix: "$$0020.png", //NOTE future suffix ex: $Default$0020.png
     atlasKey: "ui",
     panelGraphic: "green_panel.png",
@@ -32,26 +44,26 @@ creationGuiConfig.default.graphicSources = {
     }
 };
 
-creationGuiConfig.colorPanel.main = {
+creation.colorPanel.main = {
     x: 475,
     y: 150,
-    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
-    textureSrc: creationGuiConfig.default.graphicSources.panelGraphic,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.panelGraphic,
     alpha: 0.5
 };
-creationGuiConfig.colorPanel.upButton = {
-    x: creationGuiConfig.colorPanel.main.x + 50,
-    y: creationGuiConfig.colorPanel.main.y - 50,
-    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
-    textureSrc: creationGuiConfig.default.graphicSources.upButtonIcon
+creation.colorPanel.upButton = {
+    x: creation.colorPanel.main.x + 50,
+    y: creation.colorPanel.main.y - 50,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.upButtonIcon
 };
-creationGuiConfig.colorPanel.downButton = {
-    x: creationGuiConfig.colorPanel.main.x + 50,
-    y: creationGuiConfig.colorPanel.main.y + 150,
-    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
-    textureSrc: creationGuiConfig.default.graphicSources.downButtonIcon
+creation.colorPanel.downButton = {
+    x: creation.colorPanel.main.x + 50,
+    y: creation.colorPanel.main.y + 150,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.downButtonIcon
 };
-creationGuiConfig.colorPanel.captionText = {
+creation.colorPanel.captionText = {
     text: "Material Color",
     font: {
         font: "14px Arial Black",
@@ -59,12 +71,12 @@ creationGuiConfig.colorPanel.captionText = {
         stroke: "black",
         strokeThickness: 5
     },
-    x: creationGuiConfig.colorPanel.main.x,
-    y: creationGuiConfig.colorPanel.main.y - 25
+    x: creation.colorPanel.main.x,
+    y: creation.colorPanel.main.y - 25
 }
-creationGuiConfig.colorPanel.icons = {
-    x: creationGuiConfig.colorPanel.main.x - 100,
-    y: creationGuiConfig.colorPanel.main.y + 10,
+creation.colorPanel.icons = {
+    x: creation.colorPanel.main.x - 100,
+    y: creation.colorPanel.main.y + 10,
     colors: {
         red: 0xe50505,
         blue: 0x065ce5,
@@ -79,26 +91,26 @@ creationGuiConfig.colorPanel.icons = {
     }
 };
 
-creationGuiConfig.partsPanel.main = {
+creation.partsPanel.main = {
     x: 350,
     y: 150,
-    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
-    textureSrc: creationGuiConfig.default.graphicSources.panelGraphic,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.panelGraphic,
     alpha: 0.5
 };
-creationGuiConfig.partsPanel.upButton = {
-    x: creationGuiConfig.partsPanel.main.x + 50,
-    y: creationGuiConfig.partsPanel.main.y - 50,
-    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
-    textureSrc: creationGuiConfig.default.graphicSources.upButtonIcon
+creation.partsPanel.upButton = {
+    x: creation.partsPanel.main.x + 50,
+    y: creation.partsPanel.main.y - 50,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.upButtonIcon
 };
-creationGuiConfig.partsPanel.downButton = {
-    x: creationGuiConfig.partsPanel.main.x + 50,
-    y: creationGuiConfig.partsPanel.main.y + 150,
-    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
-    textureSrc: creationGuiConfig.default.graphicSources.downButtonIcon
+creation.partsPanel.downButton = {
+    x: creation.partsPanel.main.x + 50,
+    y: creation.partsPanel.main.y + 150,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.downButtonIcon
 };
-creationGuiConfig.partsPanel.captionText = {
+creation.partsPanel.captionText = {
     text: "Sentinel Part",
     font: {
         font: "14px Arial Black",
@@ -106,18 +118,18 @@ creationGuiConfig.partsPanel.captionText = {
         stroke: "black",
         strokeThickness: 5
     },
-    x: creationGuiConfig.partsPanel.main.x,
-    y: creationGuiConfig.partsPanel.main.y - 25
+    x: creation.partsPanel.main.x,
+    y: creation.partsPanel.main.y - 25
 }
 
-creationGuiConfig.previewPanel.main = {
+creation.previewPanel.main = {
     x: 75,
     y: 150,
-    atlasKey: creationGuiConfig.default.graphicSources.atlasKey,
-    textureSrc: creationGuiConfig.default.graphicSources.panelGraphic,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.panelGraphic,
     alpha: 0.5
 };
-creationGuiConfig.previewPanel.captionText = {
+creation.previewPanel.captionText = {
     text: "~Preview~",
     font: {
         font: "24px Arial Black",
@@ -125,6 +137,6 @@ creationGuiConfig.previewPanel.captionText = {
         stroke: "black",
         strokeThickness: 8
     },
-    x: creationGuiConfig.previewPanel.main.x - 20,
-    y: creationGuiConfig.previewPanel.main.y - 35
+    x: creation.previewPanel.main.x - 20,
+    y: creation.previewPanel.main.y - 35
 }
