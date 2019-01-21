@@ -78,16 +78,46 @@ creation.colorPanel.icons = {
     x: creation.colorPanel.main.x - 100,
     y: creation.colorPanel.main.y + 10,
     colors: {
-        red: 0xe50505,
-        blue: 0x065ce5,
-        green: 0x26b203,
-        yellow: 0xeae71e,
-        orange: 0xe88504,
-        purple: 0x93008c,
-        grey: 0x777477,
-        dark: 0x282828,
-        light: 0xf2f2f2,
-        babyBlue: 0x1be8d7
+        red: {
+            value: 0xe50505,
+            name: "Red"
+        },
+        blue:{
+            value: 0x065ce5,
+            name: "Blue"
+        },
+        green: {
+            value: 0x26b203,
+            name: "Green"
+        },
+        yellow: {
+            value: 0xeae71e,
+            name : "Yellow"
+        },
+        orange: {
+            value: 0xe88504,
+            name: "Orange"
+        },
+        purple:{
+            value: 0x93008c,
+            name: "Purple"
+        },
+        grey: {
+            value: 0x777477,
+            name: "Grey"
+        },
+        dark:{
+            value: 0x282828,
+            name: "Shadow"
+        },
+        light: {
+            value: 0xf2f2f2,
+            name: "Light"
+        },
+        babyBlue: {
+            value:0x1be8d7,
+            name : "Baby Blue"
+        }
     }
 };
 

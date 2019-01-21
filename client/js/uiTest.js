@@ -39,7 +39,9 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
     icons = names.map(function(c, index){
         let iColor = game.add.sprite(x, y, "dCreate", "n2_closeAxel"+ suffix);
         iColor.x += iColor.width;
-        iColor.tint = colors[c];
+        //iColor.tint = colors[c];
+        iColor.tint = colors[c.value];
+        iColor._uiName = colors[c.name];
         iColor.visible = isVisible;
         iColor.inputEnabled = true;
 
