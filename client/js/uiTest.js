@@ -38,12 +38,17 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
 
     icons = names.map(function(c, index){
         let shell = {};
-        iText = game.add.text(x, y + 120, colors[c].text);
+        const iconTextData = [
+            x + 135,
+            y + 100,
+            colors[c].text,
+            creation.colorPanel.captionText.font
+        ];
+        iText = game.add.text(...iconTextData);
         let iColor = game.add.sprite(x, y, "dCreate", "n2_closeAxel"+ suffix);
         iColor.x += iColor.width;
         //iColor.tint = colors[c];
         iColor.tint = colors[c].value;
-        iColor.visible = isVisible;
         iColor.inputEnabled = true;
 
         //Set UI Type so button can be clicked to set customization color dynamically
@@ -56,37 +61,45 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
             uiTest.customization.build[name].tint = iColor.tint //
             uiTest.customization.updatePreview();
         }, iColor);
+
+        iColor.visible = isVisible;
+        iText.visible = isVisible;
         shell.icon = iColor;
         shell.text = iText;
         //return iColor
         return shell;
     });
 
-    return icons
+    return icons;
 }
 uiTest.colorSelectionPanel = function(colorCollection, leftSelect, rightSelect){
     let current = 0;
-    colorCollection[0].visible = true;
+    colorCollection[0].icon.visible = true;
+    colorCollection[0].text.visible = true;
     leftSelect.inputEnabled = true;
     rightSelect.inputEnabled = true;
     //TODO: create event emitter that updates the preview panel when a button is clicked
     leftSelect.events.onInputDown.add(function(){
-        colorCollection[current].visible = false;
+        colorCollection[current].icon.visible = false;
+        colorCollection[current].text.visible = false;
         let canMoveLeft = current > 0;
         current = canMoveLeft ? current - 1 : colorCollection.length - 1;
-        colorCollection[current].visible = true;
+        colorCollection[current].icon.visible = true;
+        colorCollection[current].text.visible = true;
 
 
-        uiTest.customization.storePartColor(colorCollection[current].tint);
+        uiTest.customization.storePartColor(colorCollection[current].icon.tint);
         uiTest.customization.updatePreview();
     });
     rightSelect.events.onInputDown.add(function(){
-        colorCollection[current].visible = false;
+        colorCollection[current].icon.visible = false;
+        colorCollection[current].text.visible = false;
         let canMoveRight = current < colorCollection.length - 1;
         current = canMoveRight ? current + 1 : 0;
-        colorCollection[current].visible = true;
+        colorCollection[current].icon.visible = true;
+        colorCollection[current].text.visible = true;
 
-        uiTest.customization.storePartColor(colorCollection[current].tint);
+        uiTest.customization.storePartColor(colorCollection[current].icon.tint);
         uiTest.customization.updatePreview();
     });
 };
