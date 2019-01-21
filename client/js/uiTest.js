@@ -37,11 +37,12 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
     let suffix = "$$0020.png";
 
     icons = names.map(function(c, index){
+        let shell = {};
+        iText = game.add.text(x, y + 120, colors[c].text);
         let iColor = game.add.sprite(x, y, "dCreate", "n2_closeAxel"+ suffix);
         iColor.x += iColor.width;
         //iColor.tint = colors[c];
-        iColor.tint = colors[c.value];
-        iColor._uiName = colors[c.name];
+        iColor.tint = colors[c].value;
         iColor.visible = isVisible;
         iColor.inputEnabled = true;
 
@@ -49,12 +50,16 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
         iColor._uiType = "colorBtn";
         //iColor.input.enableDrag(true);
         iColor.events.onInputDown.add(function(){
+            //Assign N-droid part to current icon color
             //uiTest.customization.part.tint = uiTest.customization.color;
             let name = uiTest.customization.part._name;
             uiTest.customization.build[name].tint = iColor.tint //
             uiTest.customization.updatePreview();
         }, iColor);
-        return iColor
+        shell.icon = iColor;
+        shell.text = iText;
+        //return iColor
+        return shell;
     });
 
     return icons

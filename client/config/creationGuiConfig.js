@@ -80,43 +80,43 @@ creation.colorPanel.icons = {
     colors: {
         red: {
             value: 0xe50505,
-            name: "Red"
+            text: "Red"
         },
         blue:{
             value: 0x065ce5,
-            name: "Blue"
+            text: "Blue"
         },
         green: {
             value: 0x26b203,
-            name: "Green"
+            text: "Green"
         },
         yellow: {
             value: 0xeae71e,
-            name : "Yellow"
+            text : "Yellow"
         },
         orange: {
             value: 0xe88504,
-            name: "Orange"
+            text: "Orange"
         },
         purple:{
             value: 0x93008c,
-            name: "Purple"
+            text: "Purple"
         },
         grey: {
             value: 0x777477,
-            name: "Grey"
+            text: "Grey"
         },
         dark:{
             value: 0x282828,
-            name: "Shadow"
+            text: "Shadow"
         },
         light: {
             value: 0xf2f2f2,
-            name: "Light"
+            text: "Light"
         },
         babyBlue: {
             value:0x1be8d7,
-            name : "Baby Blue"
+            text : "Baby Blue"
         }
     }
 };
