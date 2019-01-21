@@ -45,7 +45,14 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
             creation.colorPanel.captionText.font
         ];
         iText = game.add.text(...iconTextData);
-        let iColor = game.add.sprite(x, y, "dCreate", "n2_closeAxel"+ suffix);
+
+        const iconColorData = [
+            x,
+            y,
+            "dCreate",
+            "n2_closeAxel"+ suffix
+        ];
+        let iColor = game.add.sprite(...iconC);
         iColor.x += iColor.width;
         //iColor.tint = colors[c];
         iColor.tint = colors[c].value;
