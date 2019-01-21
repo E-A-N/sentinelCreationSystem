@@ -52,7 +52,7 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
             "dCreate",
             "n2_closeAxel"+ suffix
         ];
-        let iColor = game.add.sprite(...iconC);
+        let iColor = game.add.sprite(...iconColorData);
         iColor.x += iColor.width;
         //iColor.tint = colors[c];
         iColor.tint = colors[c].value;
@@ -60,6 +60,7 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
 
         //Set UI Type so button can be clicked to set customization color dynamically
         iColor._uiType = "colorBtn";
+
         //iColor.input.enableDrag(true);
         iColor.events.onInputDown.add(function(){
             //Assign N-droid part to current icon color
@@ -113,26 +114,32 @@ uiTest.colorSelectionPanel = function(colorCollection, leftSelect, rightSelect){
 uiTest.partSelectionPanel = function(partCollection, leftSelect, rightSelect){
     let current = 0;
     partCollection[0].visible = true;
+    partCollection[0]._caption.visible = true;
     leftSelect.inputEnabled = true;
     rightSelect.inputEnabled = true;
     leftSelect.events.onInputDown.add(function(){
         partCollection[current].visible = false;
+        partCollection[current]._caption.visible = false;
         let canMoveLeft = current > 0;
         current = canMoveLeft ? current - 1 : partCollection.length - 1;
         partCollection[current].visible = true;
+        partCollection[current]._caption.visible = true;
         uiTest.customization.storeSentinelPart(partCollection[current]);
         uiTest.customization.updatePreview();
     });
     rightSelect.events.onInputDown.add(function(){
         partCollection[current].visible = false;
+        partCollection[current]._caption.visible = false;
         let canMoveRight = current < partCollection.length - 1;
         current = canMoveRight ? current + 1 : 0;
         partCollection[current].visible = true;
+        partCollection[current]._caption.visible = true;
+
         uiTest.customization.storeSentinelPart(partCollection[current]);
         uiTest.customization.updatePreview();
     });
 };
-uiTest.renderDroid = function(x, y, suffix, isVisible = true){
+uiTest.renderDroid = function(x, y, suffix, isVisible = true, context = 0){
     //Note: isVisible effects preview only because partSelection preview updates
     //every time it's button is pressed
     let parts = [];
@@ -172,10 +179,33 @@ uiTest.renderDroid = function(x, y, suffix, isVisible = true){
     parts.push(cAxel);
     parts.push(eye);
 
+    //eanDebug check to see if an optional callback would be better than checking for context
+    switch (context) {
+        case creation.default.render.context.parts:
+            parts = uiTest.renderPartCaptions(parts);
+        break;
+    };
+
     parts = parts.map(function(p){
         p.visible = isVisible;
         p._uiType = "droidPart"; //allows button to be interfaced with dynamically
         return p;
+    });
+
+    return parts;
+}
+uiTest.renderPartCaptions = (parts) => {
+    parts = parts.map ((part) => {
+        let textData = [
+            creation.partsPanel.captionText.partX,
+            creation.partsPanel.captionText.partY,
+            creation.partsPanel.captionText.captions[part._name],
+            creation.colorPanel.captionText.font
+        ];
+        part._caption = game.add.text(...textData);
+        part._caption.visible = false;
+
+        return part;
     });
 
     return parts;
@@ -223,9 +253,11 @@ uiTest.createPartsPanelItems = () => {
         creation.partsPanel.main.x,
         creation.partsPanel.main.y,
         creation.default.graphicSources.renderSuffix,
-        false //?????
+        false, //is visible
+        creation.default.render.context.parts
     ];
     const partsIcons = uiTest.renderDroid(...partsIconsData);
+    //add
     items.partsIcons = partsIcons;
 
     return items;

@@ -43,6 +43,14 @@ creation.default.graphicSources = {
         babyBlue: 0x1be8d7
     }
 };
+creation.default.render = {
+    context : {
+        preview : 0,
+        parts : 1,
+        colors: 2
+    }
+};
+
 
 creation.colorPanel.main = {
     x: 475,
@@ -149,8 +157,27 @@ creation.partsPanel.captionText = {
         strokeThickness: 5
     },
     x: creation.partsPanel.main.x,
-    y: creation.partsPanel.main.y - 25
-}
+    y: creation.partsPanel.main.y - 25,
+    partX: creation.partsPanel.main.x + 5,
+    partY: creation.partsPanel.main.y + 110,
+    captions : {
+        fSpike: "Far Spike",
+        fCore : "Far Core",
+        fLeg:   "Far Leg",
+        fFoot:  "Far Foot",
+        fAxel:  "Far Axel",
+        cCore:  "Close Core",
+        cSpike: "Close Spike",
+        cLeg:   "Close Leg",
+        cFoot:  "Close Foot",
+        cAxel:  "Close Axel",
+        eye:    "Eye"
+    }
+};
+// creation.partsPanel.icons = {
+//
+// }
+
 
 creation.previewPanel.main = {
     x: 75,
