@@ -42,7 +42,7 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
             x + 135,
             y + 100,
             colors[c].text,
-            creation.colorPanel.captionText.font
+            creation.colorPanel.captionText.style
         ];
         iText = game.add.text(...iconTextData);
 
@@ -200,7 +200,7 @@ uiTest.renderPartCaptions = (parts) => {
             creation.partsPanel.captionText.partX,
             creation.partsPanel.captionText.partY,
             creation.partsPanel.captionText.captions[part._name],
-            creation.colorPanel.captionText.font
+            creation.colorPanel.captionText.style
         ];
         part._caption = game.add.text(...textData);
         part._caption.visible = false;
@@ -244,7 +244,7 @@ uiTest.createPartsPanelItems = () => {
         creation.partsPanel.captionText.x,
         creation.partsPanel.captionText.y,
         creation.partsPanel.captionText.text,
-        creation.partsPanel.captionText.font
+        creation.partsPanel.captionText.style
     ];
     const captionText = game.add.text(...captionTextData);
     items.captionText = captionText;
@@ -296,7 +296,7 @@ uiTest.createColorPanelItems = () => {
         creation.colorPanel.captionText.x,
         creation.colorPanel.captionText.y,
         creation.colorPanel.captionText.text,
-        creation.colorPanel.captionText.font
+        creation.colorPanel.captionText.style
     ];
     const captionText = game.add.text(...captionTextData);
     items.captionText = captionText;
@@ -326,7 +326,7 @@ uiTest.createPreviewPanelItems = () => {
         creation.previewPanel.captionText.x,
         creation.previewPanel.captionText.y,
         creation.previewPanel.captionText.text,
-        creation.previewPanel.captionText.font
+        creation.previewPanel.captionText.style
     ];
     items.captionText = game.add.text(...captionTextData);
 

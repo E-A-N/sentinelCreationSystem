@@ -73,7 +73,7 @@ creation.colorPanel.downButton = {
 };
 creation.colorPanel.captionText = {
     text: "Material Color",
-    font: {
+    style: {
         font: "14px Arial Black",
         fill: "white",
         stroke: "black",
@@ -150,15 +150,16 @@ creation.partsPanel.downButton = {
 };
 creation.partsPanel.captionText = {
     text: "Sentinel Part",
-    font: {
+    style: {
         font: "14px Arial Black",
         fill: "white",
         stroke: "black",
+        align: "right",
         strokeThickness: 5
     },
     x: creation.partsPanel.main.x,
     y: creation.partsPanel.main.y - 25,
-    partX: creation.partsPanel.main.x + 5,
+    partX: creation.partsPanel.main.x + 25,
     partY: creation.partsPanel.main.y + 110,
     captions : {
         fSpike: "Far Spike",
@@ -174,9 +175,6 @@ creation.partsPanel.captionText = {
         eye:    "Eye"
     }
 };
-// creation.partsPanel.icons = {
-//
-// }
 
 
 creation.previewPanel.main = {
@@ -188,7 +186,7 @@ creation.previewPanel.main = {
 };
 creation.previewPanel.captionText = {
     text: "~Preview~",
-    font: {
+    style: {
         font: "24px Arial Black",
         fill: "white",
         stroke: "black",
