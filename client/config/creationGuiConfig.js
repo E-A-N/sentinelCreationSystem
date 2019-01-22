@@ -51,7 +51,6 @@ creation.default.render = {
     }
 };
 
-
 creation.colorPanel.main = {
     x: 475,
     y: 150,
@@ -175,7 +174,6 @@ creation.partsPanel.captionText = {
         eye:    "Eye"
     }
 };
-
 
 creation.previewPanel.main = {
     x: 75,

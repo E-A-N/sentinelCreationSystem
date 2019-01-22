@@ -1,42 +1,51 @@
 const dialogue = {};
 
+dialogue.onOpen = null;
+dialogue.onClose = null;
+
 options = {
+    spriteKey : "ui",
     background: "backgroundSprite",
     closeButton: "closeButtonSprite",
     wordWrap: true,
-}
+    x: 0,
+    y: 0
+};
 
 dialogue.init = (game, width, height, options) => {
 
     //setup background and close button functionaliity
     dialogue.game = game;
     dialogue.container   = game.add.group();
+    dialogue.container.x = options.x || game.width /2;
+    dialogue.container.y = options.y || game.height - height;
     dialogue.background  = game.add.sprite(0, 0, options.background);
-    dialouge.closeButton = game.add.sprite(0, 0, options.closeButton);
-    dialouge.wordWrap = options.wordWrap;
-    dialouge.wrapWidth = width * 0.9;
+    dialogue.closeButton = game.add.sprite(0, 0, options.closeButton);
+    dialogue.wordWrap = options.wordWrap;
+    dialogue.wrapWidth = width * 0.9;
 
-    dialouge.background.width  = width;
-    dialouge.background.height = height;
+    dialogue.background.width  = width;
+    dialogue.background.height = height;
 
-    dialouge.container.add(dialouge.background);
-    dialouge.container.add(dialouge.closeButton);
+    dialogue.container.add(dialogue.background);
+    dialogue.container.add(dialogue.closeButton);
 
-    dialouge.closeButton.x = width/2 - dialouge.closeButton.width/2;
-    dialouge.closeButton.y = height - closeButton.height;
-    dialouge.closeButton.inputEnabled = true;
-    dialouge.closeButton.onInputDown.add( function(){
-        dialouge.container.destroy();
-    }, dialouge);
+    dialogue.closeButton.x = width/2 - dialogue.closeButton.width/2;
+    dialogue.closeButton.y = height - dialogue.closeButton.height;
+    dialogue.closeButton.inputEnabled = true;
+    //onInputDown.add(this.testMessageBox,this);
+    dialogue.closeButton.events.onInputDown.add( function(){
+        dialogue.container.destroy();
+    }, dialogue);
 
-    return dialouge;
+    return dialogue;
 };
 
-dialouge.displayMessage = (message, typewriter = false) => {
-    dialouge.message = dialouge.game.add.text(0, 0, message);
-    dialouge.message.wordWrap = dialouge.wordWrap;
+dialogue.displayMessage = (message, typewriter = false) => {
+    dialogue.message = dialogue.game.add.text(0, 0, message);
+    dialogue.message.wordWrap = dialogue.wordWrap;
 
-    //position dialouge message in center of box
-    dialouge.message.x = dialouge.background.width / 2 - dialouge.message.width /2;
-    dialouge.message.y = dialouge.background.height / 2 - dialouge.message.height / 2;
+    //position dialogue message in center of box
+    dialogue.message.x = dialogue.background.width / 2 - dialogue.message.width /2;
+    dialogue.message.y = dialogue.background.height / 2 - dialogue.message.height / 2;
 };

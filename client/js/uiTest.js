@@ -362,5 +362,14 @@ uiTest.create = function() {
     uiTest.partSelectionPanel(partsPanelItems.partsIcons, partsPanelItems.upButton, partsPanelItems.downButton);
     uiTest.colorSelectionPanel(colorPanelItems.colorIcons, colorPanelItems.downButton, colorPanelItems.upButton);
 
+    const dOpts = {
+        spriteKey: creation.previewPanel.main.atlasKey,
+        background: creation.default.graphicSources.panelGraphic,
+        closeButton: creation.default.graphicSources.panelGraphic,
+        wordWrap: true,
+    }
+
+    let msg = dialogue.init(game, 300, 300, dOpts);
+    console.log("Dialouge is:", dialogue);
 };
 uiTest.update = function() {};
