@@ -23,6 +23,7 @@ uiTest.customization = {
     }
 };
 uiTest.preload = function(){
+
     uiTest.btnKey = "btn1";
     uiTest.customization.color = creation.default.graphicSources.colors["red"];
     uiTest.customization.part  = null;
@@ -30,6 +31,7 @@ uiTest.preload = function(){
     game.stage.backgroundColor = '#85b5e1';
     game.load.atlasJSONHash("ui", "assets/sprites/ui/spriteSheet.png", "assets/sprites/ui/references.json");
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
+    game.load.bitmapFont("chillerBlack", "assets/font/chillerBlack.png", "assets/font/chillerBlack.fnt")
 };
 uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
     let names = Object.keys(colors);
@@ -366,14 +368,20 @@ uiTest.create = function() {
         spriteKey: creation.previewPanel.main.atlasKey,
         background: creation.default.graphicSources.panelGraphic,
         closeButton: creation.default.graphicSources.panelGraphic,
-        wordWrap: true,
-    }
+        fontFamily: "chillerBlack",
+        fontSize: 20,
+        width: 500,
+        height: 200,
+        wordWrap: true
+    };
 
-    let msg = dialogue
-        .init(game, 300, 300, dOpts)
-        .displayMessage("This is an extended message in which I'm using to test word wrap.")
-        .displayMessage("Next Message Baby!")
-        .displayMessage("Next up!!");
+    let msg = "This is an extended message in which I'm using to test word wrap.  Yes, word wrap! If you have a problem with that then you're free to catch these hands!!";
+
+    let msgBox = dialogue
+        .init(game, dOpts)
+        .displayMessage(msg, false, () => {
+            console.log("The message is finished typing!");
+        });
 
     console.log("Dialouge is:", dialogue);
 };
