@@ -369,7 +369,12 @@ uiTest.create = function() {
         wordWrap: true,
     }
 
-    let msg = dialogue.init(game, 300, 300, dOpts);
+    let msg = dialogue
+        .init(game, 300, 300, dOpts)
+        .displayMessage("This is an extended message in which I'm using to test word wrap.")
+        .displayMessage("Next Message Baby!")
+        .displayMessage("Next up!!");
+
     console.log("Dialouge is:", dialogue);
 };
 uiTest.update = function() {};
