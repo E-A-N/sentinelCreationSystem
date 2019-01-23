@@ -51,9 +51,75 @@ creation.default.render = {
     }
 };
 
+creation.previewPanel.main = {
+    x: 75,
+    y: 75, //this is y position for all panels
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.panelGraphic,
+    alpha: 0.5
+};
+creation.previewPanel.captionText = {
+    text: "~Preview~",
+    style: {
+        font: "24px Arial Black",
+        fill: "white",
+        stroke: "black",
+        strokeThickness: 8
+    },
+    x: creation.previewPanel.main.x - 20,
+    y: creation.previewPanel.main.y - 35
+}
+
+creation.partsPanel.main = {
+    x: 350,
+    y: creation.previewPanel.main.y,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.panelGraphic,
+    alpha: 0.5
+};
+creation.partsPanel.upButton = {
+    x: creation.partsPanel.main.x + 50,
+    y: creation.partsPanel.main.y - 50,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.upButtonIcon
+};
+creation.partsPanel.downButton = {
+    x: creation.partsPanel.main.x + 50,
+    y: creation.partsPanel.main.y + 150,
+    atlasKey: creation.default.graphicSources.atlasKey,
+    textureSrc: creation.default.graphicSources.downButtonIcon
+};
+creation.partsPanel.captionText = {
+    text: "Sentinel Part",
+    style: {
+        font: "14px Arial Black",
+        fill: "white",
+        stroke: "black",
+        align: "right",
+        strokeThickness: 5
+    },
+    x: creation.partsPanel.main.x,
+    y: creation.partsPanel.main.y - 25,
+    partX: creation.partsPanel.main.x + 25,
+    partY: creation.partsPanel.main.y + 110,
+    captions : {
+        fSpike: "Far Spike",
+        fCore : "Far Core",
+        fLeg:   "Far Leg",
+        fFoot:  "Far Foot",
+        fAxel:  "Far Axel",
+        cCore:  "Close Core",
+        cSpike: "Close Spike",
+        cLeg:   "Close Leg",
+        cFoot:  "Close Foot",
+        cAxel:  "Close Axel",
+        eye:    "Eye"
+    }
+};
+
 creation.colorPanel.main = {
     x: 475,
-    y: 150,
+    y: creation.previewPanel.main.y,
     atlasKey: creation.default.graphicSources.atlasKey,
     textureSrc: creation.default.graphicSources.panelGraphic,
     alpha: 0.5
@@ -127,69 +193,3 @@ creation.colorPanel.icons = {
         }
     }
 };
-
-creation.partsPanel.main = {
-    x: 350,
-    y: 150,
-    atlasKey: creation.default.graphicSources.atlasKey,
-    textureSrc: creation.default.graphicSources.panelGraphic,
-    alpha: 0.5
-};
-creation.partsPanel.upButton = {
-    x: creation.partsPanel.main.x + 50,
-    y: creation.partsPanel.main.y - 50,
-    atlasKey: creation.default.graphicSources.atlasKey,
-    textureSrc: creation.default.graphicSources.upButtonIcon
-};
-creation.partsPanel.downButton = {
-    x: creation.partsPanel.main.x + 50,
-    y: creation.partsPanel.main.y + 150,
-    atlasKey: creation.default.graphicSources.atlasKey,
-    textureSrc: creation.default.graphicSources.downButtonIcon
-};
-creation.partsPanel.captionText = {
-    text: "Sentinel Part",
-    style: {
-        font: "14px Arial Black",
-        fill: "white",
-        stroke: "black",
-        align: "right",
-        strokeThickness: 5
-    },
-    x: creation.partsPanel.main.x,
-    y: creation.partsPanel.main.y - 25,
-    partX: creation.partsPanel.main.x + 25,
-    partY: creation.partsPanel.main.y + 110,
-    captions : {
-        fSpike: "Far Spike",
-        fCore : "Far Core",
-        fLeg:   "Far Leg",
-        fFoot:  "Far Foot",
-        fAxel:  "Far Axel",
-        cCore:  "Close Core",
-        cSpike: "Close Spike",
-        cLeg:   "Close Leg",
-        cFoot:  "Close Foot",
-        cAxel:  "Close Axel",
-        eye:    "Eye"
-    }
-};
-
-creation.previewPanel.main = {
-    x: 75,
-    y: 150,
-    atlasKey: creation.default.graphicSources.atlasKey,
-    textureSrc: creation.default.graphicSources.panelGraphic,
-    alpha: 0.5
-};
-creation.previewPanel.captionText = {
-    text: "~Preview~",
-    style: {
-        font: "24px Arial Black",
-        fill: "white",
-        stroke: "black",
-        strokeThickness: 8
-    },
-    x: creation.previewPanel.main.x - 20,
-    y: creation.previewPanel.main.y - 35
-}

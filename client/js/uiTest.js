@@ -370,19 +370,22 @@ uiTest.create = function() {
         closeButton: creation.default.graphicSources.panelGraphic,
         fontFamily: "chillerBlack",
         fontSize: 20,
+        typeDelay: 0.01,
         width: 500,
         height: 200,
-        wordWrap: true
+        wordWrap: true,
     };
 
-    let msg = "This is an extended message in which I'm using to test word wrap.  Yes, word wrap! If you have a problem with that then you're free to catch these hands!!";
+    let msg = "This is an extended message in which I'm using to test word wrap.  Yes, word wrap! Hopefully in the future we can make a really cool story driven web game with high replayability!! This next sentence is just to see how far things can go, how far we can push the limits!!!! Apparently the limits to this text ability is astounding, there seems to be none at all!!";
 
     let msgBox = dialogue
         .init(game, dOpts)
-        .displayMessage(msg, false, () => {
+        .displayMessage(msg, true, () => {
+            console.log("The message is finished typing!");
+        })
+        .displayMessage("Frosty", false, () => {
             console.log("The message is finished typing!");
         });
 
-    console.log("Dialouge is:", dialogue);
 };
 uiTest.update = function() {};

@@ -1,5 +1,5 @@
 /*
-    NOTE: Make sure a bitmap font is loaded into game for typewriter to work correctly
+    NOTE: A bitmap font is required for this module!
         game.load.bitmapFont("fontKey", "graphicSourc.png", "fontSource.fnt");
 
         checkout: https://www.pentacom.jp/pentacom/bitfontmaker2/
@@ -17,7 +17,7 @@ const dialogue = {};
 dialogue.onOpen  = null;
 dialogue.onClose = null;
 dialogue.onType  = null;
-dialogue.isTypeing = false;
+
 
 /*
 optionsModel = {
@@ -27,6 +27,7 @@ optionsModel = {
     fontSize: 14,
     fontFamily: "chillerBlack",
     wordWrap: true,
+    typeDelay: 0.01,
     width: 600,
     height: 400,
     x: 0,
@@ -45,8 +46,12 @@ dialogue.init = (game, options) => {
     dialogue.closeButton = game.add.sprite(0, 0, options.spriteKey, options.closeButton);
     dialogue.wordWrap = options.wordWrap;
     dialogue.wrapWidth = options.width * 0.9;
+    dialogue.typeDelay = options.typeDelay || 0.01;
     dialogue.fontFamily = options.fontFamily;
     dialogue.fontSize   = options.fontSize;
+
+    dialogue._isTypeing = false;
+    dialogue._que = [];
 
     dialogue.background.width  = options.width;
     dialogue.background.height = options.height;
@@ -54,6 +59,8 @@ dialogue.init = (game, options) => {
     dialogue.container.add(dialogue.background);
     dialogue.container.add(dialogue.closeButton);
 
+    dialogue.closeButton.width  = 50;
+    dialogue.closeButton.height = 50;
     dialogue.closeButton.x = options.width/2 - dialogue.closeButton.width/2;
     dialogue.closeButton.y = options.height - (dialogue.closeButton.height + 10);
     dialogue.closeButton.inputEnabled = true;
@@ -70,28 +77,36 @@ dialogue.setPropertyChain = (property, value) => {
     return dialouge;
 }
 dialogue.displayMessage = (message, typewriter = false, call) => {
-    if (dialogue.message){
-        dialogue.message.destroy();
-    };
+    let newMessageIsReady = !dialogue._isTypeing;
+    if (newMessageIsReady){
+        if (dialogue.message){
+            dialogue.message.destroy();
+        }
+        if (typewriter){
+            dialogue.typewrite(message, call);
+        }
+        else {
+            // Only support bitmap text until there's a way to use both seamlessly
+            // dialogue.message = dialogue.game.add.text(0, 0, message);
+            // dialogue.message.wordWrap = dialogue.wordWrap;
+            // dialogue.message.wordWrapWidth = dialogue.wrapWidth;
+            dialogue.message = game.add.bitmapText(0, 0, dialogue.fontFamily, message, dialogue.fontSize)
+            dialogue.message.maxWidth = dialogue.wrapWidth;
 
-    if (typewriter){
-        dialogue.typewrite(message, call);
+            //position dialogue message in center of box
+            dialogue.message.x = (dialogue.background.width * 0.5) - (dialogue.message.width * 0.5);
+            dialogue.message.y = (dialogue.background.height * 0.25) - (dialogue.message.height * 0.5);
+
+            dialogue.container.add(dialogue.message);
+
+            let doMessageAction = typeof call === "function";
+            if (doMessageAction){
+                call(dialogue.message, message);
+            }
+        }
     }
     else {
-        dialogue.message = dialogue.game.add.text(0, 0, message);
-        dialogue.message.wordWrap = dialogue.wordWrap;
-        dialogue.message.wordWrapWidth = dialogue.wrapWidth;
-
-        //position dialogue message in center of box
-        dialogue.message.x = (dialogue.background.width * 0.5) - (dialogue.message.width * 0.5);
-        dialogue.message.y = (dialogue.background.height * 0.25) - (dialogue.message.height * 0.5);
-
-        dialogue.container.add(dialogue.message);
-
-        let doMessageAction = typeof call === "function";
-        if (doMessageAction){
-            call(dialogue.message, message);
-        }
+        dialogue._que.push([message, typewriter, call]);
     }
     return dialogue;
 };
@@ -119,26 +134,33 @@ dialogue.typewrite = (message, call) => {
 
     //calculate timing
     let currentChar = 0;
-    let time = Phaser.Timer.SECOND * 0.01; //a millesecond;
+    let time = Phaser.Timer.SECOND * Math.min(1,dialogue.typeDelay); //a millesecond;
     let timer = game.time.create(false);
     timer.start();
-    dialogue.isTypeing = true;
+    dialogue._isTypeing = true;
     timer.repeat(time, amountOfChars, () => {
         //do onType function here
         let char = typedText.getChildAt(currentChar);
         char.alpha = 1;
 
-        let doTypingAction = typeof call === "function";
-        if (doTypingAction){
-            call(dialogue.message, message);
+        let typingActionExists = typeof dialogue.onType === "function";
+        if (typingActionExists){
+            dialogue.onType(dialogue.message, message);
         }
         currentChar++;
     });
     timer.onComplete.add(() => {
-        dialogue.isTypeing = false;
-        let doMessageAction = typeof call === "function";
-        if (doMessageAction){
+
+        dialogue._isTypeing = false;
+        let postActionExists = typeof call === "function";
+        let moreMessagesExist = dialogue._que.length > 0;
+
+        if (postActionExists){
             call(dialogue.container, message);
+        }
+        if (moreMessagesExist){
+            let newMessage = dialogue._que.shift();
+            dialogue.displayMessage(...newMessage);
         }
     });
 
