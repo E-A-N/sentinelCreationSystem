@@ -110,7 +110,9 @@ dialogue.displayMessage = (message, typewriter = false, call) => {
     }
     return dialogue;
 };
-
+dialogue.clearQue = () => {
+    dialogue._que = [];
+}
 dialogue.typewrite = (message, call) => {
 
     let fontFamily = dialogue.fontFamily;
