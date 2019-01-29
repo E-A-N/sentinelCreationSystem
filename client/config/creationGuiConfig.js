@@ -27,6 +27,7 @@ creation.default.parts = {
 creation.default.graphicSources = {
     renderSuffix: "$$0020.png", //NOTE future suffix ex: $Default$0020.png
     atlasKey: "ui",
+    bitmapFont: "carrierCommand",
     panelGraphic: "green_panel.png",
     upButtonIcon: "grey_arrowUpWhite.png",
     downButtonIcon: "grey_arrowDownWhite.png",

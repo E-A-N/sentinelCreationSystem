@@ -6,7 +6,7 @@
         checkout: https://github.com/andryblack/fontbuilder for easy creating custom pixel
         checkout: https://convertio.co/ttf-bmp/
         checkout: https://fontforge.github.io/en-US/ convert ttf to bitmap (png/fnt)
-
+        checkout: https://github.com/photonstorm/phaser-examples/tree/master/examples/assets/fonts/bitmapFonts
         credit to https://github.com/netgfx/Phaser-typewriter for reference material
 
 */

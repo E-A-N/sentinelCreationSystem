@@ -31,7 +31,7 @@ uiTest.preload = function(){
     game.stage.backgroundColor = '#85b5e1';
     game.load.atlasJSONHash("ui", "assets/sprites/ui/spriteSheet.png", "assets/sprites/ui/references.json");
     game.load.atlasJSONHash("dCreate", "assets/sprites/sentinelParts/spriteSheet.png", "assets/sprites/sentinelParts/references.json");
-    game.load.bitmapFont("chillerBlack", "assets/font/chillerBlack.png", "assets/font/chillerBlack.fnt")
+    game.load.bitmapFont("carrierCommand", "assets/font/carrierCommand.png", "assets/font/carrierCommand.xml")
 };
 uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
     let names = Object.keys(colors);
@@ -368,9 +368,9 @@ uiTest.create = function() {
         spriteKey: creation.previewPanel.main.atlasKey,
         background: creation.default.graphicSources.panelGraphic,
         closeButton: creation.default.graphicSources.panelGraphic,
-        fontFamily: "chillerBlack",
-        fontSize: 20,
-        typeDelay: 0.01,
+        fontFamily: creation.default.graphicSources.bitmapFont,
+        fontSize: 10,
+        typeDelay: 0.04,
         width: 500,
         height: 200,
         wordWrap: true,
