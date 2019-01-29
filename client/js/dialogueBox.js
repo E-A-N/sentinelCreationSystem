@@ -70,6 +70,9 @@ dialogue.init = (game, options) => {
 
     dialogue.closeButton.tint = 0x000999;
 
+    dialogue.container.inputEnableChildren = true;
+    dialogue.container.onChildInputDown.add(dialogue.userInput, dialogue);
+
     return dialogue;
 };
 dialogue.setPropertyChain = (property, value) => {
@@ -95,7 +98,7 @@ dialogue.displayMessage = (message, typewriter = false, call) => {
 
             //position dialogue message in center of box
             dialogue.message.x = (dialogue.background.width * 0.5) - (dialogue.message.width * 0.5);
-            dialogue.message.y = (dialogue.background.height * 0.25) - (dialogue.message.height * 0.5);
+            dialogue.message.y = (dialogue.background.height * 0.05)// - (dialogue.message.height * 0.5);
 
             dialogue.container.add(dialogue.message);
 
@@ -166,8 +169,19 @@ dialogue.typewrite = (message, call) => {
         }
     });
 
+    dialogue._timer = timer;
     dialogue.message = typedText;
     dialogue.container.add(dialogue.message);
 
     return dialogue;
 };
+
+dialogue.userInput = () => {
+    if (dialogue._isTypeing){
+        dialogue._timer.stop();
+        dialogue._timer.destroy();
+        console.log("You clicked while typing! :D");
+    }
+};
+dialogue.finishMessage   = () => {};
+dialogue.nextNextMessage = () => {};

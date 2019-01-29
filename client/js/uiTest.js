@@ -376,7 +376,7 @@ uiTest.create = function() {
         wordWrap: true,
     };
 
-    let msg = "This is an extended message in which I'm using to test word wrap.  Yes, word wrap! Hopefully in the future we can make a really cool story driven web game with high replayability!! This next sentence is just to see how far things can go, how far we can push the limits!!!! Apparently the limits to this text ability is astounding, there seems to be none at all!!";
+    let msg = "This is an extended message in which I'm using to test word wrap. Yes, word wrap! Hopefully in the future we can make a really cool story driven web game with high replayability!! This next sentence is just to see how far things can go, how far we can push the limits!!!! Apparently the limits to this text ability is astounding, there seems to be none at all!!";
 
     let msgBox = dialogue
         .init(game, dOpts)
