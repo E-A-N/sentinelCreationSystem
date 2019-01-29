@@ -12,6 +12,7 @@ creation.default.customizationModel = {
         tint: 0xFFFFFF
     }
 };
+
 creation.default.parts = {
     //NOTE: n{number} refers to ideal rendering order
     farSpike:  "n9_farSpike",
@@ -31,7 +32,7 @@ creation.default.graphicSources = {
     panelGraphic: "green_panel.png",
     upButtonIcon: "grey_arrowUpWhite.png",
     downButtonIcon: "grey_arrowDownWhite.png",
-    colors:{
+    colors: {
         red: 0xe50505,
         blue: 0x065ce5,
         green: 0x26b203,
@@ -49,6 +50,40 @@ creation.default.render = {
         preview : 0,
         parts : 1,
         colors: 2
+    }
+};
+
+creation.default.audio = {
+    root: "assets/audio/",
+    settings: {
+        volume: 0.5
+    },
+};
+
+creation.default.audio.ui = {
+    keystroke1 : {
+        src: "softClack.mp3",
+        key: "keystroke1"
+    },
+    keystroke2 : {
+        src: "typeWriterKeyStroke.mp3",
+        key: "keystroke2"
+    },
+    confirm1 : {
+        src: "strangeConfirm.mp3",
+        key: "confirm1"
+    },
+    confirm2 : {
+        src: "teleport.mp3",
+        key: "confirm2"
+    },
+    select1 : {
+        src: "ting.mp3",
+        key: "select1"
+    },
+    denied1 : {
+        src: "denied.mp3",
+        key: "denied1"
     }
 };
 

@@ -180,7 +180,6 @@ dialogue.userInput = () => {
     if (dialogue._isTypeing){
         dialogue._timer.stop();
         dialogue._timer.destroy();
-        console.log("You clicked while typing! :D");
     }
 };
 dialogue.finishMessage   = () => {};
