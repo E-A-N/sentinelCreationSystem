@@ -72,6 +72,7 @@ uiTest.renderColorIcons = function(x, y, colors, isVisible = false){
             let name = uiTest.customization.part._name;
             uiTest.customization.build[name].tint = iColor.tint //
             uiTest.customization.updatePreview();
+            uiTest._sfxSelect.play();
         }, iColor);
 
         iColor.visible = isVisible;
@@ -99,7 +100,7 @@ uiTest.colorSelectionPanel = function(colorCollection, leftSelect, rightSelect){
         colorCollection[current].icon.visible = true;
         colorCollection[current].text.visible = true;
 
-
+        uiTest._sfxSelect.play();
         uiTest.customization.storePartColor(colorCollection[current].icon.tint);
         uiTest.customization.updatePreview();
     });
@@ -111,6 +112,7 @@ uiTest.colorSelectionPanel = function(colorCollection, leftSelect, rightSelect){
         colorCollection[current].icon.visible = true;
         colorCollection[current].text.visible = true;
 
+        uiTest._sfxSelect.play();
         uiTest.customization.storePartColor(colorCollection[current].icon.tint);
         uiTest.customization.updatePreview();
     });
@@ -363,6 +365,12 @@ uiTest.create = function() {
     let colorPanelItems = uiTest.createColorPanelItems();
     let previewPanelItems = uiTest.createPreviewPanelItems();
 
+    //add game sounds NOTE: they won't play until Phaser finishes decoding them
+    uiTest._sfxConfirm = game.add.audio(creation.default.audio.ui.select1.key);
+    uiTest._sfxSelect  = game.add.audio(creation.default.audio.ui.confirm1.key);
+    uiTest._sfxType    = game.add.audio(creation.default.audio.ui.keystroke1.key);
+
+
     uiTest.partSelectionPanel(partsPanelItems.partsIcons, partsPanelItems.upButton, partsPanelItems.downButton);
     uiTest.colorSelectionPanel(colorPanelItems.colorIcons, colorPanelItems.downButton, colorPanelItems.upButton);
 
@@ -372,7 +380,7 @@ uiTest.create = function() {
         closeButton: creation.default.graphicSources.panelGraphic,
         fontFamily: creation.default.graphicSources.bitmapFont,
         fontSize: 10,
-        typeDelay: 0.04,
+        typeDelay: 0.01,
         width: 500,
         height: 200,
         wordWrap: true,
@@ -382,6 +390,9 @@ uiTest.create = function() {
 
     let msgBox = dialogue
         .init(game, dOpts)
+        .setOnTypeCallback((msgObj, msgText) => {
+            uiTest._sfxType.play();
+        })
         .displayMessage(msg, true, () => {
             console.log("The message is finished typing!");
         })

@@ -78,6 +78,11 @@ dialogue.init = (game, options) => {
 dialogue.setPropertyChain = (property, value) => {
     dialogue[property] = value;
     return dialouge;
+};
+dialogue.setOnTypeCallback = (fun) => {
+    dialogue.onType = fun;
+
+    return dialogue;
 }
 dialogue.displayMessage = (message, typewriter = false, call) => {
     let newMessageIsReady = !dialogue._isTypeing;
