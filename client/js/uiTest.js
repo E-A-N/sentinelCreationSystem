@@ -100,7 +100,7 @@ uiTest.colorSelectionPanel = function(colorCollection, leftSelect, rightSelect){
         colorCollection[current].icon.visible = true;
         colorCollection[current].text.visible = true;
 
-        uiTest._sfxSelect.play();
+        uiTest._sfxConfirm.play();
         uiTest.customization.storePartColor(colorCollection[current].icon.tint);
         uiTest.customization.updatePreview();
     });
@@ -112,7 +112,7 @@ uiTest.colorSelectionPanel = function(colorCollection, leftSelect, rightSelect){
         colorCollection[current].icon.visible = true;
         colorCollection[current].text.visible = true;
 
-        uiTest._sfxSelect.play();
+        uiTest._sfxConfirm.play();
         uiTest.customization.storePartColor(colorCollection[current].icon.tint);
         uiTest.customization.updatePreview();
     });
@@ -380,7 +380,7 @@ uiTest.create = function() {
         closeButton: creation.default.graphicSources.panelGraphic,
         fontFamily: creation.default.graphicSources.bitmapFont,
         fontSize: 10,
-        typeDelay: 0.01,
+        typeDelay: 0.03,
         width: 500,
         height: 200,
         wordWrap: true,
@@ -390,14 +390,14 @@ uiTest.create = function() {
 
     let msgBox = dialogue
         .init(game, dOpts)
-        .setOnTypeCallback((msgObj, msgText) => {
+        .setOnTypeCallback((message, char) => {
             uiTest._sfxType.play();
         })
         .displayMessage(msg, true, () => {
-            console.log("The message is finished typing!");
+            console.log("The message is finished typing 11!");
         })
         .displayMessage("Frosty", false, () => {
-            console.log("The message is finished typing!");
+            console.log("The message is finished typing 22!");
         });
 
 };

@@ -16,6 +16,7 @@ const dialogue = {};
 
 dialogue.onOpen  = null;
 dialogue.onClose = null;
+dialogue.onMessage  = null;
 dialogue.onType  = null;
 
 
@@ -52,6 +53,7 @@ dialogue.init = (game, options) => {
 
     dialogue._isTypeing = false;
     dialogue._que = [];
+    dialogue._autoTime = false;
 
     dialogue.background.width  = options.width;
     dialogue.background.height = options.height;
@@ -64,9 +66,7 @@ dialogue.init = (game, options) => {
     dialogue.closeButton.x = options.width/2 - dialogue.closeButton.width/2;
     dialogue.closeButton.y = options.height - (dialogue.closeButton.height + 10);
     dialogue.closeButton.inputEnabled = true;
-    dialogue.closeButton.events.onInputDown.add( function(){
-        dialogue.container.destroy();
-    }, dialogue);
+    dialogue.closeButton.events.onInputDown.add(dialogue.close, dialogue);
 
     dialogue.closeButton.tint = 0x000999;
 
@@ -87,19 +87,19 @@ dialogue.setOnTypeCallback = (fun) => {
 dialogue.displayMessage = (message, typewriter = false, call) => {
     let newMessageIsReady = !dialogue._isTypeing;
     if (newMessageIsReady){
+        dialogue._messageText = message;
         if (dialogue.message){
             dialogue.message.destroy();
         }
         if (typewriter){
-            dialogue.typewrite(message, call);
+            dialogue.typewrite(message);
+            dialogue.onMessage = call;
         }
         else {
             // Only support bitmap text until there's a way to use both seamlessly
-            // dialogue.message = dialogue.game.add.text(0, 0, message);
-            // dialogue.message.wordWrap = dialogue.wordWrap;
-            // dialogue.message.wordWrapWidth = dialogue.wrapWidth;
             dialogue.message = game.add.bitmapText(0, 0, dialogue.fontFamily, message, dialogue.fontSize)
             dialogue.message.maxWidth = dialogue.wrapWidth;
+
 
             //position dialogue message in center of box
             dialogue.message.x = (dialogue.background.width * 0.5) - (dialogue.message.width * 0.5);
@@ -110,6 +110,7 @@ dialogue.displayMessage = (message, typewriter = false, call) => {
             let doMessageAction = typeof call === "function";
             if (doMessageAction){
                 call(dialogue.message, message);
+                dialogue.onMessage = null;
             }
         }
     }
@@ -121,7 +122,7 @@ dialogue.displayMessage = (message, typewriter = false, call) => {
 dialogue.clearQue = () => {
     dialogue._que = [];
 }
-dialogue.typewrite = (message, call) => {
+dialogue.typewrite = (message) => {
 
     let fontFamily = dialogue.fontFamily;
     let fontSize   = dialogue.fontSize;
@@ -144,35 +145,23 @@ dialogue.typewrite = (message, call) => {
 
     //calculate timing
     let currentChar = 0;
-    let time = Phaser.Timer.SECOND * Math.min(1,dialogue.typeDelay); //a millesecond;
+    let delay = Phaser.Timer.SECOND * Math.min(1,dialogue.typeDelay); //a millesecond;
     let timer = game.time.create(false);
     timer.start();
     dialogue._isTypeing = true;
-    timer.repeat(time, amountOfChars, () => {
+    timer.repeat(delay, amountOfChars, () => {
         //do onType function here
         let char = typedText.getChildAt(currentChar);
         char.alpha = 1;
 
         let typingActionExists = typeof dialogue.onType === "function";
         if (typingActionExists){
-            dialogue.onType(dialogue.message, message);
+            dialogue.onType(message, char);
         }
         currentChar++;
     });
-    timer.onComplete.add(() => {
 
-        dialogue._isTypeing = false;
-        let postActionExists = typeof call === "function";
-        let moreMessagesExist = dialogue._que.length > 0;
-
-        if (postActionExists){
-            call(dialogue.container, message);
-        }
-        if (moreMessagesExist){
-            let newMessage = dialogue._que.shift();
-            dialogue.displayMessage(...newMessage);
-        }
-    });
+    timer.onComplete.add(dialogue.timerAction);
 
     dialogue._timer = timer;
     dialogue.message = typedText;
@@ -181,11 +170,48 @@ dialogue.typewrite = (message, call) => {
     return dialogue;
 };
 
+dialogue.timerAction = (timer) => {
+    dialogue._isTypeing = false;
+    timer.stop();
+    timer.destroy();
+
+    let postActionExists = typeof dialogue.onMessage === "function";
+    let canShowNewMessage = dialogue._que.length > 0 && dialogue._autoTime === true;
+
+    if (postActionExists){
+        dialogue.onMessage(dialogue.container, dialogue._messageText);
+    }
+    if (canShowNewMessage){
+        let newMessage = dialogue._que.shift();
+        dialogue.displayMessage(...newMessage);
+    }
+
+};
+
 dialogue.userInput = () => {
-    if (dialogue._isTypeing){
-        dialogue._timer.stop();
-        dialogue._timer.destroy();
+    let noMessagesLeft = !dialogue._isTypeing && dialogue._que.length === 0;
+    let permitExistingMessage = !dialogue._isTypeing && dialogue._que.length > 0 && dialogue._autoTime === false;
+    if (noMessagesLeft){
+        dialogue.close();
+    }
+    else if (dialogue._isTypeing) {
+        dialogue.timerAction(dialogue._timer);
+    }
+    else if (permitExistingMessage){
+        let newMessage = dialogue._que.shift();
+        dialogue.displayMessage(...newMessage);
     }
 };
+
+dialogue.close = () => {
+    dialogue._timer.stop();
+    dialogue._timer.destroy();
+    dialogue.container.destroy();
+
+    let postActionExists = typeof dialogue.onClose === "function";
+    if (postActionExists){
+        dialogue.onClose();
+    }
+}
 dialogue.finishMessage   = () => {};
 dialogue.nextNextMessage = () => {};
