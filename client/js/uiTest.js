@@ -387,7 +387,7 @@ uiTest.create = function() {
     };
 
     let msg = "This is an extended message in which I'm using to test word wrap. Yes, word wrap! Hopefully in the future we can make a really cool story driven web game with high replayability!! This next sentence is just to see how far things can go, how far we can push the limits!!!! Apparently the limits to this text ability is astounding, there seems to be none at all!!";
-
+    let msg2 = "This is the final message, after this you should be getting a nice little close button!";
     let msgBox = dialogue
         .init(game, dOpts)
         .setOnTypeCallback((message, char) => {
@@ -398,7 +398,13 @@ uiTest.create = function() {
         })
         .displayMessage("Frosty", false, () => {
             console.log("The message is finished typing 22!");
-        });
+        })
+        .displayMessage("Pookie!", false, () => {
+            console.log("The message is finished typing 33!");
+        })
+        .displayMessage(msg2, true, () => {
+            console.log("The message is finished typing 44!");
+        })
 
 };
 uiTest.update = function() {};

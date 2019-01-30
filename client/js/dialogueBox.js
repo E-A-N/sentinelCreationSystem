@@ -1,5 +1,5 @@
 /*
-    NOTE: A bitmap font is required for this module!
+    NOTE: This module on works with bitmap fonts!
         game.load.bitmapFont("fontKey", "graphicSourc.png", "fontSource.fnt");
 
         checkout: https://www.pentacom.jp/pentacom/bitfontmaker2/
@@ -57,6 +57,7 @@ dialogue.init = (game, options) => {
 
     dialogue.background.width  = options.width;
     dialogue.background.height = options.height;
+    dialogue.background.inputEnabled = true;
 
     dialogue.container.add(dialogue.background);
     dialogue.container.add(dialogue.closeButton);
@@ -65,13 +66,14 @@ dialogue.init = (game, options) => {
     dialogue.closeButton.height = 50;
     dialogue.closeButton.x = options.width/2 - dialogue.closeButton.width/2;
     dialogue.closeButton.y = options.height - (dialogue.closeButton.height + 10);
-    dialogue.closeButton.inputEnabled = true;
+    dialogue.closeButton.alpha = 0;
     dialogue.closeButton.events.onInputDown.add(dialogue.close, dialogue);
 
     dialogue.closeButton.tint = 0x000999;
 
     dialogue.container.inputEnableChildren = true;
     dialogue.container.onChildInputDown.add(dialogue.userInput, dialogue);
+    //dialogue.background.events.onInputDown.add(dialogue.userInput, dialogue);
 
     return dialogue;
 };
@@ -83,6 +85,20 @@ dialogue.setOnTypeCallback = (fun) => {
     dialogue.onType = fun;
 
     return dialogue;
+}
+dialogue.setMessageAlpha = (message, alpha) => {
+
+    let messageExists = typeof message !== "undefined" && Array.isArray(message.children);
+
+    if (messageExists) {
+        let amountOfChars = message.children.length;
+        for (let i = 0; i < amountOfChars; i++){
+            let letter = message.getChildAt(i);
+            letter.alpha = alpha;
+        };
+    }
+
+    return messageExists;
 }
 dialogue.displayMessage = (message, typewriter = false, call) => {
     let newMessageIsReady = !dialogue._isTypeing;
@@ -106,6 +122,11 @@ dialogue.displayMessage = (message, typewriter = false, call) => {
             dialogue.message.y = (dialogue.background.height * 0.05)// - (dialogue.message.height * 0.5);
 
             dialogue.container.add(dialogue.message);
+
+            let typingActionExists = typeof dialogue.onType === "function";
+            if (typingActionExists){
+                dialogue.onType(message);
+            }
 
             let doMessageAction = typeof call === "function";
             if (doMessageAction){
@@ -131,19 +152,14 @@ dialogue.typewrite = (message) => {
     let typedText  = game.add.bitmapText(xPosition, yPosition, fontFamily, message, fontSize);
     typedText.maxWidth = dialogue.wrapWidth;
 
-    let amountOfChars = typedText.children.length;
-
-    //Iterate through all of text and make invisible
-    for (let i = 0; i < amountOfChars; i++){
-        let letter = typedText.getChildAt(i);
-        letter.alpha = 0;
-    };
+    dialogue.setMessageAlpha(typedText, 0);
 
     //Tutorial resets position for some reason?? Find out why!
     typedText.x = (dialogue.background.width * 0.5) - (typedText.width * 0.5);
     typedText.y = dialogue.background.height * 0.05
 
     //calculate timing
+    let amountOfChars = typedText.children.length;
     let currentChar = 0;
     let delay = Phaser.Timer.SECOND * Math.min(1,dialogue.typeDelay); //a millesecond;
     let timer = game.time.create(false);
@@ -189,12 +205,16 @@ dialogue.timerAction = (timer) => {
 };
 
 dialogue.userInput = () => {
+    //NOTE address future edge case of both an auto timer being on and user being able to click to skip message
     let noMessagesLeft = !dialogue._isTypeing && dialogue._que.length === 0;
     let permitExistingMessage = !dialogue._isTypeing && dialogue._que.length > 0 && dialogue._autoTime === false;
     if (noMessagesLeft){
-        dialogue.close();
+        dialogue.closeButton.alpha = 1;
+        dialogue.closeButton.inputEnabled = true;
+        //dialogue.close();
     }
     else if (dialogue._isTypeing) {
+        dialogue.setMessageAlpha(dialogue.message, 1);
         dialogue.timerAction(dialogue._timer);
     }
     else if (permitExistingMessage){
@@ -213,5 +233,3 @@ dialogue.close = () => {
         dialogue.onClose();
     }
 }
-dialogue.finishMessage   = () => {};
-dialogue.nextNextMessage = () => {};
