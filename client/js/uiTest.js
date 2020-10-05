@@ -389,8 +389,8 @@ uiTest.create = function() {
         messageWidthOffset: 80,
     };
 
-    let msg = "Hi this is the character creation example!";
-    let msg2 = "Click the white arrow keys above or below the menus to change the part or color of the character you wish to create!";
+    let msg = "Hi this is the character creation example!  Click this dialogue box to learn more!";
+    let msg2 = "To edit the character click the white arrow keys above or below the menus to change the part or color of the character you wish to create!";
     let msg3 = "This example is essentially incomplete! I did not find the time to animate the character with parts but I also concluded my current route towards solving the problem wasn't ideal."
     let msg4 = "I had used Adobe Flash to animate the robot and structured the layers to support the model I had designed.  I think a tool like Blender or Spine would be more appropiate for a character with full fledged animation"
     let msg5 = "Soon, when I find the time I'll rebuild this with Spine or Blender graphics as an open source module that should help in constructing your own character creation tool as much as possible."
