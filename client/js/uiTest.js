@@ -407,9 +407,9 @@ uiTest.create = function() {
         clearCurrentImages: false,
     }
     let chatImage = {
-        x: msgBox.container.x + 15,
+        x: msgBox.container.x + 25,
         y: msgBox.container.y + 30,
-        key: "antHead",
+        key: "ean",
     };
     imageData.images.push(chatImage);
     msgBox.setOnTypeCallback((message, char) => {
