@@ -384,27 +384,56 @@ uiTest.create = function() {
         width: 500,
         height: 200,
         wordWrap: true,
+        messageYOffset: 10,
+        messageXOffset: 45,
+        messageWidthOffset: 80,
     };
 
-    let msg = "This is an extended message in which I'm using to test word wrap. Yes, word wrap! Hopefully in the future we can make a really cool story driven web game with high replayability!! This next sentence is just to see how far things can go, how far we can push the limits!!!! Apparently the limits to this text ability is astounding, there seems to be none at all!!";
-    let msg2 = "This is the final message, after this you should be getting a nice little close button!";
-    let msgBox = dialogue
-        .init(game, dOpts)
-        .setOnTypeCallback((message, char) => {
-            uiTest._sfxType.play();
-        })
-        .displayMessage(msg, true, () => {
-            console.log("The message is finished typing 11!");
-        })
-        .displayMessage("Frosty", false, () => {
-            console.log("The message is finished typing 22!");
-        })
-        .displayMessage("Pookie!", false, () => {
-            console.log("The message is finished typing 33!");
-        })
-        .displayMessage(msg2, true, () => {
-            console.log("The message is finished typing 44!");
-        })
+    let msg = "Hi this is the character creation example!";
+    let msg2 = "Click the white arrow keys above or below the menus to change the part or color of the character you wish to create!";
+    let msg3 = "This example is essentially incomplete! I did not find the time to animate the character with parts but I also concluded my current route towards solving the problem wasn't ideal."
+    let msg4 = "I had used Adobe Flash to animate the robot and structured the layers to support the model I had designed.  I think a tool like Blender or Spine would be more appropiate for a character with full fledged animation"
+    let msg5 = "Soon, when I find the time I'll rebuild this with Spine or Blender graphics as an open source module that should help in constructing your own character creation tool as much as possible."
+    let msg6 = "In the meantime please checkout the codebase and pick my little conventions apart!"
+    let msg7 = "Admittedly, the code in this repo isn't the most readable! It is my promise that in my refined example that will change!!"
+    let msg8 = "As for this message box, don't worry about this part of the code.  It's deprecated for a more refined version in it's own repository that I'll be releasing for use with Phaser 2 or Phaser 3 soon! :D"
+    let msg9 = "But...Do you like this tool? Let me know!"
+    
+    
+    let msgBox = PhaserDialogue().init(game, dOpts);
+    let imageData = {
+        images: [],
+        hasNewImages: true,
+        clearCurrentImages: false,
+    }
+    let chatImage = {
+        x: msgBox.container.x + 15,
+        y: msgBox.container.y + 30,
+        key: "antHead",
+    };
+    imageData.images.push(chatImage);
+    msgBox.setOnTypeCallback((message, char) => {
+        uiTest._sfxType.play();
+    });
+    msgBox.displayMessage(msg, imageData, true, () => {
+        console.log("Use this callback to tailor settings for the next display");
+
+    })
+    .displayMessage(msg2, null, true, () => {
+        
+        console.log("The message is finished typing 22!");
+    })
+    .displayMessage(msg3, null, true, () => {
+        console.log("The message is finished typing 33!");
+    })
+    .displayMessage(msg4, null, true, () => {
+        console.log("The message is finished typing 44!");
+    })
+    .displayMessage(msg5, null, true)
+    .displayMessage(msg6, null, true)
+    .displayMessage(msg7, null, true)
+    .displayMessage(msg8, null, true)
+    .displayMessage(msg9, null, true)
 
 };
 uiTest.update = function() {};

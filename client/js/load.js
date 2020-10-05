@@ -16,6 +16,7 @@ loadState.preload = () => {
 
     //Load your images, spritesheets, bitmaps...
     game.load.image("boiler-logo", "assets/img/boilerplate-logo.png");
+    game.load.image("antHead", "assets/sprites/ui/antHeadOnly87X122.png");
 
     loadState.loadAudio();
     //Load your sounds, efx, music...
