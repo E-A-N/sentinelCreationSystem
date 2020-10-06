@@ -368,7 +368,7 @@ uiTest.create = function() {
     //add game sounds NOTE: they won't play until Phaser finishes decoding them
     uiTest._sfxConfirm = game.add.audio(creation.default.audio.ui.select1.key);
     uiTest._sfxSelect  = game.add.audio(creation.default.audio.ui.confirm1.key);
-    uiTest._sfxType    = game.add.audio(creation.default.audio.ui.keystroke1.key);
+    uiTest._sfxType    = game.add.audio(creation.default.audio.ui.keystroke2.key);
 
 
     uiTest.partSelectionPanel(partsPanelItems.partsIcons, partsPanelItems.upButton, partsPanelItems.downButton);
@@ -380,7 +380,7 @@ uiTest.create = function() {
         closeButton: creation.default.graphicSources.panelGraphic,
         fontFamily: creation.default.graphicSources.bitmapFont,
         fontSize: 10,
-        typeDelay: 0.03,
+        typeDelay: 0.04,
         width: 500,
         height: 200,
         wordWrap: true,

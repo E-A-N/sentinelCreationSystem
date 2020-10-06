@@ -56,7 +56,7 @@ creation.default.render = {
 creation.default.audio = {
     root: "assets/audio/",
     settings: {
-        volume: 0.5
+        volume: 1
     },
 };
 
